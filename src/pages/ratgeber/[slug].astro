@@ -1,0 +1,200 @@
+---
+// Vorlage für jede Ratgeber-Artikelseite. Astro erzeugt beim Build
+// für jede Datei in src/content/ratgeber/ eine eigene Seite.
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import JsonLd from '../../components/JsonLd.astro';
+import ContactSection from '../../components/ContactSection.astro';
+import { getPosts, formatDate, readingTime, type Post } from '../../utils/ratgeber';
+import { site } from '../../data/site';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+interface Props {
+  post: Post;
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const { title, seoTitle, description, pubDate, updatedDate, author, category } = post.data;
+
+const siteUrl = Astro.site!.toString();
+const url = new URL(Astro.url.pathname, Astro.site).toString();
+const minutes = readingTime(post.body);
+
+const articleSchema = {
+  '@type': 'BlogPosting',
+  '@id': `${url}#artikel`,
+  headline: title,
+  description,
+  url,
+  mainEntityOfPage: url,
+  inLanguage: 'de-DE',
+  datePublished: pubDate.toISOString(),
+  dateModified: (updatedDate ?? pubDate).toISOString(),
+  articleSection: category,
+  timeRequired: `PT${minutes}M`,
+  author: { '@type': 'Person', name: author, worksFor: { '@id': `${siteUrl}#business` } },
+  publisher: { '@id': `${siteUrl}#business` },
+};
+
+const breadcrumbSchema = {
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Start', item: siteUrl },
+    { '@type': 'ListItem', position: 2, name: 'Ratgeber', item: new URL('/ratgeber/', Astro.site).toString() },
+    { '@type': 'ListItem', position: 3, name: title, item: url },
+  ],
+};
+---
+
+<BaseLayout title={seoTitle ?? `${title} | ${site.name}`} description={description} ogType="article">
+  <JsonLd slot="head" data={articleSchema} />
+  <JsonLd slot="head" data={breadcrumbSchema} />
+
+  <article>
+    <header class="article-head">
+      <div class="container article-narrow">
+        <nav class="breadcrumb" aria-label="Brotkrumen-Navigation">
+          <ol>
+            <li><a href="/">Start</a></li>
+            <li><a href="/ratgeber/">Ratgeber</a></li>
+            <li aria-current="page">{title}</li>
+          </ol>
+        </nav>
+        <span class="eyebrow">{category}</span>
+        <h1>{title}</h1>
+        <p class="lead">{description}</p>
+        <p class="article-meta">
+          <span>Von {author}</span>
+          <span aria-hidden="true">·</span>
+          <time datetime={pubDate.toISOString()}>{formatDate(pubDate)}</time>
+          {
+            updatedDate && (
+              <>
+                <span aria-hidden="true">·</span>
+                <span>
+                  aktualisiert am <time datetime={updatedDate.toISOString()}>{formatDate(updatedDate)}</time>
+                </span>
+              </>
+            )
+          }
+          <span aria-hidden="true">·</span>
+          <span>{minutes} Min. Lesezeit</span>
+        </p>
+      </div>
+    </header>
+
+    <div class="section article-section">
+      <div class="container article-narrow article-body">
+        <Content />
+      </div>
+    </div>
+
+    <aside class="container article-narrow">
+      <div class="author-box">
+        <span class="author-box__initials" aria-hidden="true">MH</span>
+        <div>
+          <p class="author-box__name">{author}</p>
+          <p class="author-box__text">
+            Schreinermeister und Inhaber der {site.name} in Wolfratshausen. Plant seit über 20 Jahren Möbel und Innenausbau für Häuser und Wohnungen im Isartal.
+          </p>
+        </div>
+      </div>
+    </aside>
+  </article>
+
+  <ContactSection
+    title="Sie planen etwas Ähnliches?"
+    text="Wir kommen zum Aufmaß vorbei, schauen uns den Raum an und zeigen Ihnen, welche Lösung zu Ihrem Platz und Budget passt."
+  />
+</BaseLayout>
+
+<style>
+  .article-head {
+    padding-block: clamp(2rem, 6vw, 4rem) clamp(1.5rem, 4vw, 2.5rem);
+    border-bottom: 1px solid var(--c-line);
+  }
+
+  .article-narrow {
+    max-width: calc(46rem + 2 * var(--gutter));
+  }
+
+  .breadcrumb ol {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0 0 1.75rem;
+    padding: 0;
+    font-size: 0.875rem;
+    color: var(--c-muted);
+  }
+
+  .breadcrumb li + li::before {
+    content: '›';
+    margin-right: 0.4rem;
+  }
+
+  .breadcrumb a {
+    color: var(--c-muted);
+  }
+
+  .breadcrumb [aria-current] {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 22rem;
+  }
+
+  .article-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    font-size: 0.925rem;
+    color: var(--c-muted);
+    margin: 1.5rem 0 0;
+  }
+
+  .article-section {
+    padding-block: clamp(2rem, 5vw, 3.5rem);
+  }
+
+  .author-box {
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+    padding: 1.5rem;
+    margin-bottom: var(--space-section);
+    background: var(--c-surface);
+    border: 1px solid var(--c-line);
+    border-radius: var(--radius);
+  }
+
+  .author-box__initials {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 3.25rem;
+    height: 3.25rem;
+    border-radius: 50%;
+    background: var(--c-accent);
+    color: #fff;
+    font-family: var(--f-head);
+    font-weight: 600;
+  }
+
+  .author-box__name {
+    font-weight: 600;
+    margin: 0 0 0.25rem;
+  }
+
+  .author-box__text {
+    color: var(--c-muted);
+    margin: 0;
+    font-size: 0.95rem;
+  }
+</style>

@@ -3,7 +3,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import ServiceCard from '../components/ServiceCard.astro';
 import ContactSection from '../components/ContactSection.astro';
+import FaqSection from '../components/FaqSection.astro';
+import ArticleCard from '../components/ArticleCard.astro';
 import { site, services } from '../data/site';
+import { faqs } from '../data/faq';
+import { getPosts } from '../utils/ratgeber';
+
+const latestPosts = (await getPosts()).slice(0, 2);
 
 const steps = [
   { title: 'Gespräch', text: 'Sie erzählen uns, was Sie vorhaben. Gerne direkt bei Ihnen vor Ort, damit wir den Raum sehen.' },
@@ -77,6 +83,34 @@ const steps = [
     </div>
   </section>
 
+  {
+    latestPosts.length > 0 && (
+      <section class="section" aria-labelledby="ratgeber-titel">
+        <div class="container">
+          <div class="section-head section-head--row">
+            <div>
+              <span class="eyebrow">Ratgeber</span>
+              <h2 id="ratgeber-titel">Wissen aus der Werkstatt</h2>
+              <p class="lead">Planungstipps und Hintergründe, damit Sie Ihr Vorhaben besser einschätzen können.</p>
+            </div>
+            <a class="btn btn--ghost" href="/ratgeber/">Alle Artikel</a>
+          </div>
+          <div class="posts">
+            {latestPosts.map((post) => <ArticleCard post={post} />)}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <div class="section--white">
+    <FaqSection
+      faqs={faqs}
+      title="Häufige Fragen an unsere Werkstatt"
+      intro="Die wichtigsten Antworten rund um Ablauf, Aufmaß und Material. Ihre Frage ist nicht dabei? Rufen Sie uns an."
+    />
+  </div>
+
   <ContactSection />
 </BaseLayout>
 
@@ -136,6 +170,24 @@ const steps = [
     border: 1px solid var(--c-line);
     border-radius: 999px;
     font-weight: 500;
+  }
+
+  .section-head--row {
+    max-width: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 1.5rem;
+  }
+
+  .section-head--row > div {
+    max-width: 44rem;
+  }
+
+  .posts {
+    display: grid;
+    gap: 1.5rem;
   }
 
   @media (max-width: 52rem) {

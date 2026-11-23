@@ -9,9 +9,10 @@ import { site } from '../data/site';
 interface Props {
   title: string; // Seitentitel (ca. 50–60 Zeichen)
   description: string; // Meta-Description (ca. 140–160 Zeichen)
+  ogType?: 'website' | 'article';
 }
 
-const { title, description } = Astro.props;
+const { title, description, ogType = 'website' } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 ---
 
@@ -32,7 +33,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta name="theme-color" content="#f7f3ed" />
 
     <!-- Vorschau beim Teilen (Open Graph) -->
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:locale" content="de_DE" />
     <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={title} />
@@ -40,6 +41,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:url" content={canonical} />
 
     <LocalBusinessSchema />
+    <!-- Platz für seitenspezifische Angaben, z. B. Schema.org eines Artikels -->
+    <slot name="head" />
   </head>
   <body>
     <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>

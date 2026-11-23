@@ -30,6 +30,7 @@ export const navigation = [
   { href: '/', label: 'Start' },
   { href: '/leistungen/', label: 'Leistungen' },
   { href: '/ueber-uns/', label: 'Über uns' },
+  { href: '/ratgeber/', label: 'Ratgeber' },
   { href: '/kontakt/', label: 'Kontakt' },
 ];
 

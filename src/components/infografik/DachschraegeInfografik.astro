@@ -1,0 +1,322 @@
+---
+// Infografik: Einbauschrank unter der Dachschräge in vier Höhenzonen.
+// Maßstab der Zeichnung: 2 Pixel = 1 cm. Beispielraum: Raumhöhe 240 cm,
+// Kniestock 90 cm, Dachneigung 45°, Schrankbreite 300 cm.
+
+const zones = [
+  {
+    no: 1,
+    title: 'Lange Kleidung',
+    height: 'volle Höhe, 240 cm',
+    text: 'Mäntel und Kleider brauchen etwa 150 bis 170 cm Hängehöhe. Darüber bleibt Platz für eine Hutablage.',
+  },
+  {
+    no: 2,
+    title: 'Zwei Kleiderstangen',
+    height: 'volle Höhe, 240 cm',
+    text: 'Hemden, Blusen und Sakkos brauchen rund 100 cm. Bei voller Raumhöhe passen zwei Stangen übereinander.',
+  },
+  {
+    no: 3,
+    title: 'Kurze Kleidung und Fächer',
+    height: '240 bis 165 cm',
+    text: 'Eine Kleiderstange für kurze Teile, darüber ein schräges Fach für Pullover, Taschen oder Kartons.',
+  },
+  {
+    no: 4,
+    title: 'Schubladen unter der Schräge',
+    height: '165 bis 90 cm',
+    text: 'Wo man nicht mehr aufrecht stehen kann, holen tiefe Auszüge den Inhalt nach vorne. Oben liegt Flaches wie Bettwäsche.',
+  },
+];
+
+// Hilfswerte für die Zeichnung
+const coats = [105, 145, 185];
+const shirtsCol2 = [246, 280, 314, 348];
+const shirtsCol3 = [394, 428, 462, 496];
+const drawers = [344, 402, 460];
+---
+
+<figure class="ig">
+  <svg
+    class="ig__svg"
+    viewBox="0 0 760 600"
+    role="img"
+    aria-labelledby="ig-titel ig-beschreibung"
+  >
+    <title id="ig-titel">Einbauschrank unter der Dachschräge in vier Zonen</title>
+    <desc id="ig-beschreibung">
+      Vorderansicht eines 300 cm breiten Einbauschranks in einem Raum mit 240 cm Höhe, 90 cm Kniestock und 45 Grad
+      Dachneigung. Zone 1 mit voller Höhe für lange Kleidung, Zone 2 mit zwei Kleiderstangen übereinander, Zone 3 unter
+      dem Beginn der Schräge mit einer Kleiderstange und einem Fach, Zone 4 im niedrigsten Bereich mit drei Schubladen.
+    </desc>
+
+    <defs>
+      <pattern id="ig-hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+        <rect width="8" height="8" fill="#efe8de"></rect>
+        <line x1="0" y1="0" x2="0" y2="8" stroke="#c9b9a4" stroke-width="2"></line>
+      </pattern>
+    </defs>
+
+    <!-- Baukörper: Decke, Dachschräge, Kniestock, Boden -->
+    <rect class="ig-hatch" x="40" y="14" width="332" height="26"></rect>
+    <polygon class="ig-hatch" points="352,14 372,14 690,332 690,358 670,340"></polygon>
+    <polygon class="ig-hatch" points="370,40 670,340 690,340 690,320 384,14 370,14"></polygon>
+    <rect class="ig-hatch" x="670" y="340" width="22" height="196"></rect>
+    <rect class="ig-hatch" x="40" y="520" width="652" height="16"></rect>
+
+    <!-- Schrankkorpus -->
+    <polygon class="ig-carcass" points="70,40 370,40 670,340 670,520 70,520"></polygon>
+    <line class="ig-divider" x1="220" y1="40" x2="220" y2="520"></line>
+    <line class="ig-divider" x1="370" y1="40" x2="370" y2="520"></line>
+    <line class="ig-divider" x1="520" y1="190" x2="520" y2="520"></line>
+
+    <!-- Zone 1: Hutablage, Stange, Mäntel, Schuhboden -->
+    <line class="ig-shelf" x1="72" y1="82" x2="218" y2="82"></line>
+    <line class="ig-rod" x1="80" y1="102" x2="210" y2="102"></line>
+    {
+      coats.map((x) => (
+        <g>
+          <path class="ig-hanger" d={`M${x} 102 l-14 10 h28 z`} />
+          <rect class="ig-coat" x={x - 16} y="110" width="32" height="306" rx="6" />
+        </g>
+      ))
+    }
+    <line class="ig-shelf" x1="72" y1="470" x2="218" y2="470"></line>
+
+    <!-- Zone 2: zwei Kleiderstangen -->
+    <line class="ig-rod" x1="228" y1="60" x2="362" y2="60"></line>
+    {shirtsCol2.map((x) => <rect class="ig-shirt" x={x - 12} y="66" width="24" height="192" rx="5" />)}
+    <line class="ig-shelf" x1="222" y1="280" x2="368" y2="280"></line>
+    <line class="ig-rod" x1="228" y1="300" x2="362" y2="300"></line>
+    {shirtsCol2.map((x) => <rect class="ig-shirt" x={x - 12} y="306" width="24" height="192" rx="5" />)}
+
+    <!-- Zone 3: Fach in der Schräge, Kleiderstange, Boden -->
+    <rect class="ig-stack" x="378" y="162" width="40" height="18" rx="2"></rect>
+    <rect class="ig-stack" x="378" y="182" width="40" height="18" rx="2"></rect>
+    <rect class="ig-stack" x="426" y="182" width="36" height="18" rx="2"></rect>
+    <line class="ig-shelf" x1="372" y1="202" x2="518" y2="202"></line>
+    <line class="ig-rod" x1="378" y1="222" x2="512" y2="222"></line>
+    {shirtsCol3.map((x) => <rect class="ig-shirt" x={x - 12} y="228" width="24" height="192" rx="5" />)}
+    <line class="ig-shelf" x1="372" y1="440" x2="518" y2="440"></line>
+
+    <!-- Zone 4: Flaches oben, drei Schubladen -->
+    <rect class="ig-stack" x="530" y="318" width="70" height="20" rx="2"></rect>
+    <rect class="ig-stack" x="530" y="296" width="50" height="20" rx="2"></rect>
+    <line class="ig-shelf" x1="522" y1="340" x2="668" y2="340"></line>
+    {
+      drawers.map((y) => (
+        <g>
+          <rect class="ig-drawer" x="526" y={y} width="138" height="54" rx="3" />
+          <line class="ig-handle" x1="575" y1={y + 27} x2="615" y2={y + 27} />
+        </g>
+      ))
+    }
+
+    <!-- Maße -->
+    <g class="ig-dim">
+      <line x1="44" y1="40" x2="44" y2="520"></line>
+      <line x1="36" y1="40" x2="52" y2="40"></line>
+      <line x1="36" y1="520" x2="52" y2="520"></line>
+      <line x1="718" y1="340" x2="718" y2="520"></line>
+      <line x1="710" y1="340" x2="726" y2="340"></line>
+      <line x1="710" y1="520" x2="726" y2="520"></line>
+    </g>
+    <text class="ig-text ig-text--dim" transform="translate(30 280) rotate(-90)" text-anchor="middle">Raumhöhe 240 cm</text>
+    <text class="ig-text ig-text--dim" transform="translate(744 430) rotate(-90)" text-anchor="middle">Kniestock 90 cm</text>
+    <text class="ig-text ig-text--label" transform="translate(566 150) rotate(45)" text-anchor="middle">Dachschräge 45°</text>
+
+    <!-- Zonen-Nummern -->
+    {
+      zones.map((z, i) => (
+        <g class="ig-badge">
+          <circle cx={145 + i * 150} cy="566" r="18" />
+          <text x={145 + i * 150} y="572" text-anchor="middle">{z.no}</text>
+        </g>
+      ))
+    }
+  </svg>
+
+  <ol class="ig__legend">
+    {
+      zones.map((z) => (
+        <li>
+          <span class="ig__no" aria-hidden="true">{z.no}</span>
+          <div>
+            <p class="ig__title">
+              {z.title} <span class="ig__height">{z.height}</span>
+            </p>
+            <p class="ig__text">{z.text}</p>
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+
+  <figcaption>
+    Beispiel für einen 300 cm breiten Schrank an der Giebelwand. Raumhöhe 240 cm, Kniestock 90 cm, Dachneigung 45°.
+    Alle Maße sind Richtwerte und werden beim Aufmaß an Ihren Raum angepasst.
+  </figcaption>
+</figure>
+
+<style>
+  .ig {
+    margin: 2.5rem 0;
+    padding: clamp(1rem, 3vw, 1.75rem);
+    background: var(--c-surface);
+    border: 1px solid var(--c-line);
+    border-radius: 14px;
+  }
+
+  .ig__svg {
+    width: 100%;
+    height: auto;
+  }
+
+  .ig-hatch {
+    fill: url(#ig-hatch);
+  }
+
+  .ig-carcass {
+    fill: #fbf8f4;
+    stroke: #26211d;
+    stroke-width: 3;
+    stroke-linejoin: round;
+  }
+
+  .ig-divider {
+    stroke: #26211d;
+    stroke-width: 2;
+  }
+
+  .ig-shelf {
+    stroke: #655c54;
+    stroke-width: 3;
+  }
+
+  .ig-rod {
+    stroke: #26211d;
+    stroke-width: 4;
+    stroke-linecap: round;
+  }
+
+  .ig-hanger {
+    fill: none;
+    stroke: #26211d;
+    stroke-width: 2;
+    stroke-linejoin: round;
+  }
+
+  .ig-coat {
+    fill: #8f5428;
+  }
+
+  .ig-shirt {
+    fill: #c08a58;
+  }
+
+  .ig-stack {
+    fill: #e2d1bb;
+    stroke: #8f5428;
+    stroke-width: 1.5;
+  }
+
+  .ig-drawer {
+    fill: #efe8de;
+    stroke: #26211d;
+    stroke-width: 2;
+  }
+
+  .ig-handle {
+    stroke: #8f5428;
+    stroke-width: 5;
+    stroke-linecap: round;
+  }
+
+  .ig-dim {
+    stroke: #655c54;
+    stroke-width: 1.5;
+  }
+
+  .ig-text {
+    font-family: var(--f-body);
+    fill: #26211d;
+  }
+
+  .ig-text--dim {
+    font-size: 15px;
+    fill: #655c54;
+  }
+
+  .ig-text--label {
+    font-size: 17px;
+    font-weight: 600;
+    fill: #8f5428;
+  }
+
+  .ig-badge circle {
+    fill: #8f5428;
+  }
+
+  .ig-badge text {
+    font-family: var(--f-body);
+    font-size: 17px;
+    font-weight: 700;
+    fill: #ffffff;
+  }
+
+  .ig__legend {
+    list-style: none;
+    margin: 1.5rem 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+    gap: 1.25rem 1.75rem;
+  }
+
+  .ig__legend li {
+    display: flex;
+    gap: 0.85rem;
+    margin: 0;
+  }
+
+  .ig__no {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 1.9rem;
+    height: 1.9rem;
+    border-radius: 50%;
+    background: #8f5428;
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+
+  .ig__title {
+    font-weight: 650;
+    margin: 0 0 0.2rem;
+    font-size: 1rem;
+  }
+
+  .ig__height {
+    display: block;
+    font-weight: 500;
+    font-size: 0.85rem;
+    color: var(--c-accent);
+  }
+
+  .ig__text {
+    margin: 0;
+    font-size: 0.95rem;
+    color: var(--c-muted);
+  }
+
+  figcaption {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--c-line);
+    font-size: 0.875rem;
+    color: var(--c-muted);
+  }
+</style>

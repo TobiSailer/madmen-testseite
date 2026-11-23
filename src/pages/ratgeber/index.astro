@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import JsonLd from '../../components/JsonLd.astro';
+import { getPosts } from '../../utils/ratgeber';
+
+const posts = await getPosts();
+const siteUrl = Astro.site!.toString();
+
+const schema = {
+  '@type': 'Blog',
+  name: 'Ratgeber der Schreinerei Huber',
+  url: new URL('/ratgeber/', Astro.site).toString(),
+  publisher: { '@id': `${siteUrl}#business` },
+  blogPost: posts.map((p) => ({
+    '@type': 'BlogPosting',
+    headline: p.data.title,
+    url: new URL(`/ratgeber/${p.id}/`, Astro.site).toString(),
+    datePublished: p.data.pubDate.toISOString(),
+  })),
+};
+---
+
+<BaseLayout
+  title="Ratgeber: Tipps rund um Möbel und Innenausbau | Schreinerei Huber"
+  description="Praxiswissen aus der Werkstatt: Planungstipps für Einbauschränke, Küchen, Treppen und Holzpflege von der Schreinerei Huber aus Wolfratshausen."
+>
+  <JsonLd slot="head" data={schema} />
+
+  <Hero
+    eyebrow="Ratgeber"
+    title="Wissen aus der Werkstatt"
+    text="Hier erklären wir, worauf es bei Möbeln nach Maß, Innenausbau und Holzpflege ankommt. So können Sie besser einschätzen, was für Ihr Vorhaben sinnvoll ist."
+  />
+
+  <section class="section">
+    <div class="container">
+      <div class="posts">
+        {posts.map((post) => <ArticleCard post={post} headingLevel="h2" />)}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .posts {
+    display: grid;
+    gap: 1.5rem;
+    max-width: 60rem;
+  }
+</style>
