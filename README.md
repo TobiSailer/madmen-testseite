@@ -21,13 +21,33 @@ Cloudflare (Workers mit statischen Dateien) ist mit diesem GitHub-Repository ver
 
 | Pfad | Inhalt |
 |---|---|
-| `src/data/site.ts` | Firmendaten, Navigation, Leistungen (zentral pflegen) |
+| `src/content/cms/` | Im CMS gepflegte Inhalte: Startseite, Leistungen, Kontaktdaten |
+| `keystatic.config.ts` | Felder und Regeln der CMS-Oberfläche |
+| `src/data/site.ts` | Feste Firmendaten (Name, Gründung, Region) und Navigation |
 | `src/pages/` | Eine Datei pro Seite |
 | `src/components/` | Wiederverwendbare Bausteine (Header, Footer, Hero, Karten, Kontakt) |
 | `src/layouts/BaseLayout.astro` | Rahmen jeder Seite inkl. SEO-Angaben und noindex |
 | `src/styles/global.css` | Farben, Schriften, Grundstil |
 | `public/` | Dateien, die unverändert ausgeliefert werden (Favicon, robots.txt, `_headers` für Cloudflare) |
 | `astro.config.mjs` | Projekteinstellungen, Live-Adresse für Sitemap und Canonical |
+
+## Inhalte bearbeiten mit Keystatic (CMS)
+
+Keystatic läuft im lokalen Modus: Die Bearbeitungsoberfläche gibt es nur auf dem eigenen Rechner, nicht auf der Live-Seite.
+
+1. `npm run dev` starten und http://localhost:4321/keystatic öffnen.
+2. Inhalte ändern und oben rechts auf **Save** klicken. Keystatic speichert direkt in die Dateien unter `src/content/cms/` (Texte) und `public/images/` (Bilder). Die lokale Vorschau zeigt die Änderung sofort.
+3. Veröffentlichen: Änderungen per Git committen und mit `git push` hochladen. Cloudflare baut die Seite danach automatisch neu.
+
+Bearbeitbar sind:
+
+| Bereich in Keystatic | Inhalte | Datei |
+|---|---|---|
+| Startseite | Headline, Einleitungstext, Hero-Bild mit Alternativtext | `src/content/cms/startseite.yaml` |
+| Leistungen | Liste mit Titel, Kurzbeschreibung, Bild, optional ausführlicher Text und Stichpunkte. Hinzufügen, löschen, per Ziehen sortieren | `src/content/cms/leistungen.yaml` |
+| Kontaktdaten | Adresse, Telefon, E-Mail, Öffnungszeiten, Hinweis. Gilt für Header, Footer, Kontaktbereich, Impressum, Datenschutz und Schema.org | `src/content/cms/kontakt.yaml` |
+
+Welche Felder es gibt und welche Grenzen gelten (z. B. Zeichenanzahl), steht in `keystatic.config.ts`. Gelesen werden die Inhalte über `src/lib/cms.ts`. Design, Layout und Farben sind im CMS nicht bearbeitbar.
 
 ## Ratgeber-Artikel anlegen
 
@@ -52,4 +72,4 @@ FAQ der Startseite: `src/data/faq.ts`. Sichtbarer Text und Schema.org-FAQPage ko
 - Bei eigener Domain: Adresse in `astro.config.mjs` und `public/robots.txt` anpassen
 - noindex in `BaseLayout.astro` und `public/_headers` entfernen
 - Impressum und Datenschutz vollständig befüllen und rechtlich prüfen lassen
-- Platzhalter in `src/data/site.ts` ersetzen
+- Platzhalter in Keystatic (Kontaktdaten, Bilder) und in `src/data/site.ts` ersetzen

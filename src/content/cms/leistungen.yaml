@@ -1,0 +1,80 @@
+items:
+  - title: Möbel nach Maß
+    short: >-
+      Schränke, Regale und Tische, die genau in Ihren Raum passen, auch unter
+      Dachschrägen.
+    image: /images/leistungen/moebel-nach-mass.svg
+    long: >-
+      Wir planen und bauen Möbel, die sich nach dem Raum richten und nicht
+      umgekehrt. Ob Einbauschrank unter der Dachschräge, Bücherwand oder Esstisch
+      aus heimischer Eiche: Sie bekommen ein Stück, das genau passt und lange
+      hält.
+    points:
+      - Einbauschränke und Garderoben
+      - Regale und Bücherwände
+      - Tische aus Massivholz
+  - title: Küchen
+    short: >-
+      Küchen aus der eigenen Werkstatt, geplant nach Ihren Abläufen und Ihrem
+      Budget.
+    image: /images/leistungen/kuechen.svg
+    long: >-
+      Eine Küche wird täglich benutzt. Deshalb planen wir sie mit Ihnen gemeinsam
+      nach Ihren Abläufen, wählen passende Geräte aus und bauen Fronten und
+      Korpusse in der eigenen Werkstatt.
+    points:
+      - Planung vor Ort
+      - Fronten in Holz, Lack oder Furnier
+      - Montage inklusive Geräteeinbau
+  - title: Innenausbau
+    short: >-
+      Wandverkleidungen, Decken und Akustiklösungen für Wohnräume, Praxen und
+      Büros.
+    image: /images/leistungen/innenausbau.svg
+    long: >-
+      Holz verändert die Wirkung eines Raums. Wir verkleiden Wände und Decken,
+      bauen Akustikelemente für bessere Raumakustik und statten Praxen, Kanzleien
+      und Büros aus.
+    points:
+      - Wand- und Deckenverkleidungen
+      - Akustikpaneele
+      - Ladenbau und Praxisausstattung
+  - title: Türen und Fenster
+    short: >-
+      Innentüren, Haustüren und Holzfenster, neu gefertigt oder fachgerecht
+      aufgearbeitet.
+    image: /images/leistungen/tueren-fenster.svg
+    long: >-
+      Wir liefern und montieren Innentüren und Haustüren und fertigen
+      Holzfenster für Alt- und Neubau. Bei denkmalgeschützten Gebäuden arbeiten
+      wir bestehende Fenster und Türen auf.
+    points:
+      - Innen- und Haustüren
+      - Holzfenster
+      - Aufarbeitung im Bestand
+  - title: Treppen
+    short: >-
+      Holztreppen für Neubau und Renovierung, inklusive Belegung bestehender
+      Betontreppen.
+    image: /images/leistungen/treppen.svg
+    long: >-
+      Ob neue Wangentreppe oder die Belegung einer bestehenden Betontreppe mit
+      Holzstufen: Wir messen auf, planen und montieren Treppen, die sicher sind
+      und zum Haus passen.
+    points:
+      - Wangen- und Faltwerktreppen
+      - Stufenbelag auf Beton
+      - Geländer in Holz und Metall
+  - title: Reparaturen
+    short: >-
+      Klemmende Türen, lose Scharniere oder beschädigte Möbel: Wir reparieren,
+      statt zu ersetzen.
+    image: /images/leistungen/reparaturen.svg
+    long: >-
+      Viele Holzarbeiten lassen sich mit überschaubarem Aufwand reparieren. Wir
+      kommen vorbei, schauen uns den Schaden an und sagen Ihnen offen, ob sich
+      eine Reparatur lohnt.
+    points:
+      - Türen und Beschläge
+      - Möbelreparatur
+      - Kleine Arbeiten im Haus

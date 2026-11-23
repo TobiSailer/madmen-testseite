@@ -3,6 +3,9 @@
 // Bewusst ohne Formular und ohne eingebettete Karte: beides würde externe
 // Dienste oder einen Server brauchen. Kann später ergänzt werden.
 import { site } from '../data/site';
+import { getKontakt } from '../lib/cms';
+
+const kontakt = await getKontakt();
 
 interface Props {
   title?: string;
@@ -17,7 +20,7 @@ const {
 } = Astro.props;
 
 const Heading = headingLevel;
-const tel = `tel:${site.phone.replace(/\s/g, '')}`;
+const tel = kontakt.phoneHref;
 const mapsLink = `https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site.geo.lng}#map=15/${site.geo.lat}/${site.geo.lng}`;
 ---
 
@@ -28,8 +31,8 @@ const mapsLink = `https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${sit
       <Heading id="kontakt-titel">{title}</Heading>
       <p class="lead">{text}</p>
       <div class="contact__actions">
-        <a class="btn btn--primary" href={tel}>Anrufen: {site.phoneDisplay}</a>
-        <a class="btn btn--ghost" href={`mailto:${site.email}`}>E-Mail schreiben</a>
+        <a class="btn btn--primary" href={tel}>Anrufen: {kontakt.phone}</a>
+        <a class="btn btn--ghost" href={`mailto:${kontakt.email}`}>E-Mail schreiben</a>
       </div>
     </div>
 
@@ -39,24 +42,24 @@ const mapsLink = `https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${sit
           <dt>Adresse</dt>
           <dd>
             {site.name}<br />
-            {site.address.street}<br />
-            {site.address.zip} {site.address.city}<br />
+            {kontakt.street}<br />
+            {kontakt.zip} {kontakt.city}<br />
             <a href={mapsLink} rel="noopener">Auf OpenStreetMap ansehen</a>
           </dd>
         </div>
         <div>
           <dt>Telefon</dt>
-          <dd><a href={tel}>{site.phoneDisplay}</a></dd>
+          <dd><a href={tel}>{kontakt.phone}</a></dd>
         </div>
         <div>
           <dt>E-Mail</dt>
-          <dd><a href={`mailto:${site.email}`}>{site.email}</a></dd>
+          <dd><a href={`mailto:${kontakt.email}`}>{kontakt.email}</a></dd>
         </div>
         <div>
           <dt>Öffnungszeiten</dt>
           <dd>
-            {site.openingHours.map((o) => <span class="hours">{o.days}: {o.time}</span>)}
-            <span class="hours hours--note">Termine vor Ort nach Vereinbarung</span>
+            {kontakt.hours.map((o) => <span class="hours">{o.days}: {o.time}</span>)}
+            {kontakt.hoursNote && <span class="hours hours--note">{kontakt.hoursNote}</span>}
           </dd>
         </div>
       </dl>

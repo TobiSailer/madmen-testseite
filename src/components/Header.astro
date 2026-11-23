@@ -1,6 +1,8 @@
 ---
 import { site, navigation } from '../data/site';
+import { getKontakt } from '../lib/cms';
 
+const kontakt = await getKontakt();
 const current = Astro.url.pathname;
 const isActive = (href: string) => (href === '/' ? current === '/' : current.startsWith(href));
 ---
@@ -35,8 +37,8 @@ const isActive = (href: string) => (href === '/' ? current === '/' : current.sta
           ))
         }
       </ul>
-      <a class="btn btn--primary nav__cta" href={`tel:${site.phone.replace(/\s/g, '')}`}>
-        {site.phoneDisplay}
+      <a class="btn btn--primary nav__cta" href={kontakt.phoneHref}>
+        {kontakt.phone}
       </a>
     </nav>
   </div>

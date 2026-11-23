@@ -5,11 +5,13 @@ import ServiceCard from '../components/ServiceCard.astro';
 import ContactSection from '../components/ContactSection.astro';
 import FaqSection from '../components/FaqSection.astro';
 import ArticleCard from '../components/ArticleCard.astro';
-import { site, services } from '../data/site';
+import { site } from '../data/site';
 import { faqs } from '../data/faq';
 import { getPosts } from '../utils/ratgeber';
+import { getStartseite, getLeistungen } from '../lib/cms';
 
-const latestPosts = (await getPosts()).slice(0, 2);
+const [startseite, services, posts] = await Promise.all([getStartseite(), getLeistungen(), getPosts()]);
+const latestPosts = posts.slice(0, 2);
 
 const steps = [
   { title: 'Gespräch', text: 'Sie erzählen uns, was Sie vorhaben. Gerne direkt bei Ihnen vor Ort, damit wir den Raum sehen.' },
@@ -26,8 +28,9 @@ const steps = [
   <Hero
     variant="home"
     eyebrow="Schreinerei in Wolfratshausen"
-    title="Möbel und Innenausbau, die genau passen"
-    text="Wir planen, bauen und montieren Möbel nach Maß, Küchen, Türen und Treppen für Kunden im Isartal und im Fünfseenland. Alles aus der eigenen Werkstatt."
+    title={startseite.headline}
+    text={startseite.intro}
+    image={{ src: startseite.heroImage, alt: startseite.heroImageAlt }}
     primary={{ href: '/kontakt/', label: 'Beratung anfragen' }}
     secondary={{ href: '/leistungen/', label: 'Unsere Leistungen' }}
   />

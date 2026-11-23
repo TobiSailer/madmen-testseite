@@ -1,6 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { site } from '../data/site';
+import { getKontakt } from '../lib/cms';
+
+const kontakt = await getKontakt();
 ---
 
 <BaseLayout
@@ -15,8 +18,8 @@ import { site } from '../data/site';
       <h2>1. Verantwortliche Stelle</h2>
       <p>
         {site.name}, {site.owner}<br />
-        {site.address.street}, {site.address.zip} {site.address.city}<br />
-        E-Mail: {site.email}
+        {kontakt.street}, {kontakt.zip} {kontakt.city}<br />
+        E-Mail: {kontakt.email}
       </p>
 
       <h2>2. Hosting</h2>

@@ -1,9 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
-import Icon from '../components/Icon.astro';
 import ContactSection from '../components/ContactSection.astro';
-import { services } from '../data/site';
+import { getLeistungen } from '../lib/cms';
+
+// Leistungen werden im CMS gepflegt (Keystatic: Leistungen)
+const services = await getLeistungen();
 ---
 
 <BaseLayout
@@ -26,15 +28,15 @@ import { services } from '../data/site';
         {
           services.map((s) => (
             <article id={s.id} class="service">
-              <span class="service__icon">
-                <Icon name={s.icon} />
-              </span>
+              <img class="service__image" src={s.image} alt="" width="1200" height="750" loading="lazy" decoding="async" />
               <div>
                 <h2>{s.title}</h2>
                 <p>{s.long}</p>
-                <ul>
-                  {s.points.map((p) => <li>{p}</li>)}
-                </ul>
+                {s.points.length > 0 && (
+                  <ul>
+                    {s.points.map((p) => <li>{p}</li>)}
+                  </ul>
+                )}
               </div>
             </article>
           ))
@@ -70,19 +72,24 @@ import { services } from '../data/site';
     color: var(--c-accent);
   }
 
-  .services {
-    display: grid;
-    gap: 0;
-  }
-
   .service {
     display: grid;
-    grid-template-columns: 4rem 1fr;
-    gap: 1.5rem;
+    grid-template-columns: minmax(0, 18rem) minmax(0, 1fr);
+    gap: clamp(1.5rem, 4vw, 2.5rem);
+    align-items: start;
     padding-block: 2.5rem;
     border-top: 1px solid var(--c-line);
     scroll-margin-top: 6rem;
-    max-width: 52rem;
+    max-width: 60rem;
+  }
+
+  .service__image {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    border-radius: var(--radius);
+    background: var(--c-surface-alt);
   }
 
   .service h2 {
@@ -95,30 +102,10 @@ import { services } from '../data/site';
     color: var(--c-muted);
   }
 
-  .service__icon {
-    display: grid;
-    place-items: center;
-    width: 4rem;
-    height: 4rem;
-    border-radius: 12px;
-    background: var(--c-surface-alt);
-    color: var(--c-accent);
-  }
-
-  .service__icon :global(.icon) {
-    width: 2rem;
-    height: 2rem;
-  }
-
-  @media (max-width: 36rem) {
+  @media (max-width: 40rem) {
     .service {
       grid-template-columns: 1fr;
-      gap: 1rem;
-    }
-
-    .service__icon {
-      width: 3rem;
-      height: 3rem;
+      gap: 1.25rem;
     }
   }
 </style>

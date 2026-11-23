@@ -1,7 +1,6 @@
 ---
-// Karte für eine Leistung. Wird auf Startseite und Leistungsseite genutzt.
-import Icon from './Icon.astro';
-import type { Service } from '../data/site';
+// Karte für eine Leistung. Inhalte (Titel, Kurzbeschreibung, Bild) kommen aus dem CMS.
+import type { Service } from '../lib/cms';
 
 interface Props {
   service: Service;
@@ -12,17 +11,19 @@ const { service, link = true } = Astro.props;
 ---
 
 <article class="card">
-  <span class="card__icon"><Icon name={service.icon} /></span>
-  <h3 class="card__title">{service.title}</h3>
-  <p class="card__text">{service.short}</p>
-  {
-    link && (
-      <a class="card__link" href={`/leistungen/#${service.id}`}>
-        Mehr zu {service.title}
-        <span aria-hidden="true">→</span>
-      </a>
-    )
-  }
+  <img class="card__image" src={service.image} alt="" width="1200" height="750" loading="lazy" decoding="async" />
+  <div class="card__body">
+    <h3 class="card__title">{service.title}</h3>
+    <p class="card__text">{service.short}</p>
+    {
+      link && (
+        <a class="card__link" href={`/leistungen/#${service.id}`}>
+          Mehr zu {service.title}
+          <span aria-hidden="true">→</span>
+        </a>
+      )
+    }
+  </div>
 </article>
 
 <style>
@@ -33,7 +34,7 @@ const { service, link = true } = Astro.props;
     background: var(--c-surface);
     border: 1px solid var(--c-line);
     border-radius: var(--radius);
-    padding: 1.75rem;
+    overflow: hidden;
     transition: box-shadow 0.2s, transform 0.2s;
   }
 
@@ -42,20 +43,19 @@ const { service, link = true } = Astro.props;
     transform: translateY(-2px);
   }
 
-  .card__icon {
-    display: grid;
-    place-items: center;
-    width: 3rem;
-    height: 3rem;
-    border-radius: 10px;
+  .card__image {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
     background: var(--c-surface-alt);
-    color: var(--c-accent);
-    margin-bottom: 1.25rem;
   }
 
-  .card__icon :global(.icon) {
-    width: 1.6rem;
-    height: 1.6rem;
+  .card__body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 1.5rem 1.75rem 1.75rem;
   }
 
   .card__title {

@@ -1,0 +1,18 @@
+street: Beispielstraße 12
+zip: '82515'
+city: Wolfratshausen
+phone: 08171 000000
+email: info@schreinerei-huber.example
+openingHours:
+  - days:
+      - Mo
+      - Tu
+      - We
+      - Th
+    opens: '07:30'
+    closes: '17:00'
+  - days:
+      - Fr
+    opens: '07:30'
+    closes: '13:00'
+hoursNote: Termine vor Ort nach Vereinbarung

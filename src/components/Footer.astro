@@ -1,6 +1,8 @@
 ---
 import { site, navigation, legalNavigation } from '../data/site';
+import { getKontakt } from '../lib/cms';
 
+const kontakt = await getKontakt();
 const year = new Date().getFullYear();
 ---
 
@@ -14,17 +16,17 @@ const year = new Date().getFullYear();
     <div>
       <h2 class="footer__head">Kontakt</h2>
       <address>
-        {site.address.street}<br />
-        {site.address.zip} {site.address.city}<br />
-        <a href={`tel:${site.phone.replace(/\s/g, '')}`}>{site.phoneDisplay}</a><br />
-        <a href={`mailto:${site.email}`}>{site.email}</a>
+        {kontakt.street}<br />
+        {kontakt.zip} {kontakt.city}<br />
+        <a href={kontakt.phoneHref}>{kontakt.phone}</a><br />
+        <a href={`mailto:${kontakt.email}`}>{kontakt.email}</a>
       </address>
     </div>
 
     <div>
       <h2 class="footer__head">Öffnungszeiten</h2>
       <ul class="footer__list">
-        {site.openingHours.map((o) => <li>{o.days}: {o.time}</li>)}
+        {kontakt.hours.map((o) => <li>{o.days}: {o.time}</li>)}
       </ul>
     </div>
 
