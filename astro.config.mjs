@@ -2,10 +2,9 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
-// Die spätere Live-Adresse der Website. Wird für Canonical-Links und die
-// Sitemap gebraucht. Nach dem ersten Cloudflare-Deployment hier die echte
-// Adresse eintragen (z. B. https://schreinerei-huber.pages.dev).
-const SITE_URL = 'https://schreinerei-huber.pages.dev';
+// Live-Adresse der Website auf Cloudflare. Wird für Canonical-Links und die
+// Sitemap gebraucht. Bei einer eigenen Domain hier die Domain eintragen.
+const SITE_URL = 'https://schreinerei-huber.t-sailer.workers.dev';
 
 export default defineConfig({
   site: SITE_URL,

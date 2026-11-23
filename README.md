@@ -2,6 +2,12 @@
 
 Fiktive Beispiel-Website, gebaut mit [Astro](https://astro.build). Dient intern als Lernprojekt für Astro und Cloudflare. Alle Seiten stehen auf `noindex`.
 
+Live: https://schreinerei-huber.t-sailer.workers.dev
+
+## Veröffentlichung
+
+Cloudflare (Workers mit statischen Dateien) ist mit diesem GitHub-Repository verbunden. Jeder `git push` auf `main` baut die Seite automatisch neu und veröffentlicht sie nach ein bis zwei Minuten. Einstellungen dazu stehen in `wrangler.jsonc`, Build-Protokolle im Cloudflare-Dashboard unter Workers & Pages → schreinerei-huber → Deployments.
+
 ## Wichtige Befehle
 
 | Befehl | Was passiert |
@@ -34,7 +40,7 @@ Fiktive Beispiel-Website, gebaut mit [Astro](https://astro.build). Dient intern 
 
 ## Vor einer echten Veröffentlichung
 
-- Live-Adresse in `astro.config.mjs` und `public/robots.txt` anpassen
+- Bei eigener Domain: Adresse in `astro.config.mjs` und `public/robots.txt` anpassen
 - noindex in `BaseLayout.astro` und `public/_headers` entfernen
 - Impressum und Datenschutz vollständig befüllen und rechtlich prüfen lassen
 - Platzhalter in `src/data/site.ts` ersetzen
