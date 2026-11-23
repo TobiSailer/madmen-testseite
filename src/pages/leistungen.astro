@@ -1,0 +1,124 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import Icon from '../components/Icon.astro';
+import ContactSection from '../components/ContactSection.astro';
+import { services } from '../data/site';
+---
+
+<BaseLayout
+  title="Leistungen: Möbel, Küchen, Innenausbau | Schreinerei Huber"
+  description="Möbel nach Maß, Küchen, Innenausbau, Türen, Treppen und Reparaturen: die Leistungen der Schreinerei Huber in Wolfratshausen im Überblick."
+>
+  <Hero
+    eyebrow="Leistungen"
+    title="Schreinerarbeiten aus einer Hand"
+    text="Wir übernehmen Planung, Fertigung und Montage. So haben Sie einen festen Ansprechpartner und keine Abstimmung zwischen verschiedenen Firmen."
+  />
+
+  <section class="section">
+    <div class="container">
+      <nav class="jump" aria-label="Leistungen auf dieser Seite">
+        {services.map((s) => <a href={`#${s.id}`}>{s.title}</a>)}
+      </nav>
+
+      <div class="services">
+        {
+          services.map((s) => (
+            <article id={s.id} class="service">
+              <span class="service__icon">
+                <Icon name={s.icon} />
+              </span>
+              <div>
+                <h2>{s.title}</h2>
+                <p>{s.long}</p>
+                <ul>
+                  {s.points.map((p) => <li>{p}</li>)}
+                </ul>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <ContactSection title="Ihr Projekt ist nicht dabei?" text="Viele Aufträge passen in keine Kategorie. Beschreiben Sie uns kurz, was Sie vorhaben, und wir sagen Ihnen offen, ob wir es umsetzen können." />
+</BaseLayout>
+
+<style>
+  .jump {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .jump a {
+    padding: 0.45rem 0.95rem;
+    border: 1px solid var(--c-line);
+    border-radius: 999px;
+    background: var(--c-surface);
+    color: var(--c-text);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+
+  .jump a:hover {
+    border-color: var(--c-accent);
+    color: var(--c-accent);
+  }
+
+  .services {
+    display: grid;
+    gap: 0;
+  }
+
+  .service {
+    display: grid;
+    grid-template-columns: 4rem 1fr;
+    gap: 1.5rem;
+    padding-block: 2.5rem;
+    border-top: 1px solid var(--c-line);
+    scroll-margin-top: 6rem;
+    max-width: 52rem;
+  }
+
+  .service h2 {
+    font-size: 1.75rem;
+  }
+
+  .service ul {
+    margin: 0;
+    padding-left: 1.2em;
+    color: var(--c-muted);
+  }
+
+  .service__icon {
+    display: grid;
+    place-items: center;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 12px;
+    background: var(--c-surface-alt);
+    color: var(--c-accent);
+  }
+
+  .service__icon :global(.icon) {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  @media (max-width: 36rem) {
+    .service {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .service__icon {
+      width: 3rem;
+      height: 3rem;
+    }
+  }
+</style>

@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactSection from '../components/ContactSection.astro';
+---
+
+<BaseLayout
+  title="Kontakt: Telefon, Adresse, Öffnungszeiten | Schreinerei Huber"
+  description="So erreichen Sie die Schreinerei Huber in Wolfratshausen: Telefon, E-Mail, Adresse und Öffnungszeiten. Termine vor Ort nach Vereinbarung."
+>
+  <ContactSection
+    headingLevel="h1"
+    title="Kontakt zur Schreinerei Huber"
+    text="Am schnellsten erreichen Sie uns telefonisch während der Öffnungszeiten. Außerhalb davon schreiben Sie uns gerne eine E-Mail mit ein paar Sätzen zu Ihrem Vorhaben und, wenn vorhanden, Fotos oder Maßen."
+  />
+
+  <section class="section">
+    <div class="container prose">
+      <h2>Was uns bei einer Anfrage hilft</h2>
+      <ul>
+        <li>Um welche Art von Arbeit es geht, zum Beispiel Einbauschrank, Küche oder Reparatur</li>
+        <li>Ungefähre Maße oder ein Foto vom Raum</li>
+        <li>Ihr gewünschter Zeitraum</li>
+        <li>Ort des Projekts</li>
+      </ul>
+      <p>
+        Keine Sorge, wenn Sie noch nicht alles wissen. Vieles klären wir am besten gemeinsam vor Ort.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

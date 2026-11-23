@@ -1,0 +1,6 @@
+# Crawling ist erlaubt, damit Suchmaschinen das "noindex" auf den Seiten
+# lesen können. Ein "Disallow" würde das verhindern.
+User-agent: *
+Allow: /
+
+Sitemap: https://schreinerei-huber.pages.dev/sitemap-index.xml

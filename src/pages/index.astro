@@ -1,0 +1,146 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import ContactSection from '../components/ContactSection.astro';
+import { site, services } from '../data/site';
+
+const steps = [
+  { title: 'Gespräch', text: 'Sie erzählen uns, was Sie vorhaben. Gerne direkt bei Ihnen vor Ort, damit wir den Raum sehen.' },
+  { title: 'Aufmaß und Angebot', text: 'Wir messen genau auf, machen einen Entwurf und schicken Ihnen ein nachvollziehbares Angebot.' },
+  { title: 'Fertigung', text: 'Gebaut wird in unserer Werkstatt in Wolfratshausen, mit Holz, das wir selbst auswählen.' },
+  { title: 'Montage', text: 'Wir bauen sauber ein, räumen hinterher auf und erklären Ihnen alles, was Sie wissen sollten.' },
+];
+---
+
+<BaseLayout
+  title="Schreinerei Huber in Wolfratshausen | Möbel nach Maß & Innenausbau"
+  description={site.description}
+>
+  <Hero
+    variant="home"
+    eyebrow="Schreinerei in Wolfratshausen"
+    title="Möbel und Innenausbau, die genau passen"
+    text="Wir planen, bauen und montieren Möbel nach Maß, Küchen, Türen und Treppen für Kunden im Isartal und im Fünfseenland. Alles aus der eigenen Werkstatt."
+    primary={{ href: '/kontakt/', label: 'Beratung anfragen' }}
+    secondary={{ href: '/leistungen/', label: 'Unsere Leistungen' }}
+  />
+
+  <section class="section section--alt" aria-labelledby="leistungen-titel">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Leistungen</span>
+        <h2 id="leistungen-titel">Was wir für Sie bauen</h2>
+        <p class="lead">
+          Vom einzelnen Regal bis zum kompletten Innenausbau. Sie haben bei uns einen Ansprechpartner von der ersten Idee bis zur Montage.
+        </p>
+      </div>
+      <div class="grid-cards">
+        {services.map((service) => <ServiceCard service={service} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="ablauf-titel">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Ablauf</span>
+        <h2 id="ablauf-titel">So läuft ein Auftrag bei uns ab</h2>
+      </div>
+      <ol class="steps">
+        {
+          steps.map((step, i) => (
+            <li class="step">
+              <span class="step__no">{String(i + 1).padStart(2, '0')}</span>
+              <h3>{step.title}</h3>
+              <p>{step.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="section section--alt" aria-labelledby="region-titel">
+    <div class="container split">
+      <div>
+        <span class="eyebrow">Region</span>
+        <h2 id="region-titel">Unterwegs zwischen Isar und Starnberger See</h2>
+        <p>
+          Unsere Werkstatt liegt in Wolfratshausen. Von hier aus arbeiten wir für private Bauherren, Hausverwaltungen und Gewerbekunden in der Umgebung.
+        </p>
+        <a href="/ueber-uns/">Mehr über unsere Werkstatt</a>
+      </div>
+      <ul class="tags" aria-label="Einsatzgebiet">
+        {site.serviceArea.map((place) => <li>{place}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <ContactSection />
+</BaseLayout>
+
+<style>
+  .grid-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
+    gap: 1.25rem;
+  }
+
+  .steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+    gap: 2rem;
+  }
+
+  .step {
+    border-top: 2px solid var(--c-text);
+    padding-top: 1.25rem;
+  }
+
+  .step__no {
+    display: block;
+    font-family: var(--f-head);
+    font-size: 1rem;
+    color: var(--c-accent);
+    margin-bottom: 0.5rem;
+  }
+
+  .step p {
+    color: var(--c-muted);
+    margin: 0;
+  }
+
+  .split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+  }
+
+  .tags {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .tags li {
+    padding: 0.5rem 1rem;
+    background: var(--c-surface);
+    border: 1px solid var(--c-line);
+    border-radius: 999px;
+    font-weight: 500;
+  }
+
+  @media (max-width: 52rem) {
+    .split {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

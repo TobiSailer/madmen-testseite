@@ -1,0 +1,15 @@
+# Build-Ergebnis (wird bei jedem Build neu erzeugt)
+dist/
+.astro/
+
+# Installierte Pakete (werden mit "npm install" neu geladen)
+node_modules/
+
+# Zugangsdaten und lokale Einstellungen
+.env
+.env.*
+.claude/settings.local.json
+
+# Systemdateien
+.DS_Store
+npm-debug.log*

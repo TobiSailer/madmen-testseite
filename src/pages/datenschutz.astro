@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../data/site';
+---
+
+<BaseLayout
+  title="Datenschutzerklärung | Schreinerei Huber"
+  description="Datenschutzerklärung der Schreinerei Huber, Wolfratshausen: Informationen zur Verarbeitung personenbezogener Daten auf dieser Website."
+>
+  <section class="section">
+    <div class="container prose">
+      <h1>Datenschutzerklärung</h1>
+      <p><mark class="placeholder">Platzhalter: Diese Datenschutzerklärung ist nur ein Gerüst für eine Testseite. Vor einer echten Veröffentlichung muss sie vollständig erstellt und rechtlich geprüft werden, zum Beispiel durch einen Datenschutzbeauftragten oder eine Fachanwältin.</mark></p>
+
+      <h2>1. Verantwortliche Stelle</h2>
+      <p>
+        {site.name}, {site.owner}<br />
+        {site.address.street}, {site.address.zip} {site.address.city}<br />
+        E-Mail: {site.email}
+      </p>
+
+      <h2>2. Hosting</h2>
+      <p><mark class="placeholder">[PLATZHALTER: Angaben zum Hosting-Anbieter, z. B. Cloudflare, Art der verarbeiteten Daten wie IP-Adresse und Server-Logfiles, Rechtsgrundlage, Drittlandübermittlung]</mark></p>
+
+      <h2>3. Schriftarten</h2>
+      <p>
+        Diese Website verwendet Schriftarten, die direkt von unserem eigenen Server ausgeliefert werden. Es findet keine Verbindung zu Servern von Google oder anderen Schriftanbietern statt.
+      </p>
+
+      <h2>4. Cookies und Analyse</h2>
+      <p>
+        Diese Website setzt derzeit keine Cookies und verwendet keine Analyse- oder Tracking-Dienste. <mark class="placeholder">[PLATZHALTER: bei späterer Einbindung z. B. von Matomo ergänzen]</mark>
+      </p>
+
+      <h2>5. Kontaktaufnahme</h2>
+      <p><mark class="placeholder">[PLATZHALTER: Verarbeitung bei Kontakt per E-Mail oder Telefon, Speicherdauer, Rechtsgrundlage]</mark></p>
+
+      <h2>6. Ihre Rechte</h2>
+      <p><mark class="placeholder">[PLATZHALTER: Auskunft, Berichtigung, Löschung, Einschränkung, Datenübertragbarkeit, Widerspruch, Beschwerderecht bei der Aufsichtsbehörde]</mark></p>
+    </div>
+  </section>
+</BaseLayout>

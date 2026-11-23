@@ -1,0 +1,125 @@
+---
+import { site, navigation, legalNavigation } from '../data/site';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container footer__grid">
+    <div>
+      <p class="footer__name">{site.name}</p>
+      <p class="footer__claim">{site.claim}</p>
+    </div>
+
+    <div>
+      <h2 class="footer__head">Kontakt</h2>
+      <address>
+        {site.address.street}<br />
+        {site.address.zip} {site.address.city}<br />
+        <a href={`tel:${site.phone.replace(/\s/g, '')}`}>{site.phoneDisplay}</a><br />
+        <a href={`mailto:${site.email}`}>{site.email}</a>
+      </address>
+    </div>
+
+    <div>
+      <h2 class="footer__head">Öffnungszeiten</h2>
+      <ul class="footer__list">
+        {site.openingHours.map((o) => <li>{o.days}: {o.time}</li>)}
+      </ul>
+    </div>
+
+    <nav aria-label="Fußnavigation">
+      <h2 class="footer__head">Seiten</h2>
+      <ul class="footer__list">
+        {navigation.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+      </ul>
+    </nav>
+  </div>
+
+  <div class="container footer__bottom">
+    <p>© {year} {site.name}. Fiktive Testseite.</p>
+    <ul class="footer__legal">
+      {legalNavigation.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+    </ul>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--c-dark);
+    color: var(--c-on-dark);
+    padding-top: clamp(3rem, 6vw, 4.5rem);
+    font-size: 0.95rem;
+  }
+
+  .footer a {
+    color: var(--c-on-dark);
+    text-decoration: none;
+  }
+
+  .footer a:hover {
+    text-decoration: underline;
+  }
+
+  .footer__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+    gap: 2rem;
+    padding-bottom: 2.5rem;
+  }
+
+  .footer__name {
+    font-family: var(--f-head);
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+  }
+
+  .footer__claim {
+    color: rgb(243 236 226 / 0.7);
+  }
+
+  .footer__head {
+    font-family: var(--f-body);
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgb(243 236 226 / 0.6);
+    margin-bottom: 0.8rem;
+  }
+
+  address {
+    font-style: normal;
+    line-height: 1.8;
+  }
+
+  .footer__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    line-height: 1.9;
+  }
+
+  .footer__bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem 1.5rem;
+    padding-block: 1.25rem;
+    border-top: 1px solid rgb(243 236 226 / 0.15);
+    color: rgb(243 236 226 / 0.65);
+    font-size: 0.875rem;
+  }
+
+  .footer__bottom p {
+    margin: 0;
+  }
+
+  .footer__legal {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 1.25rem;
+  }
+</style>

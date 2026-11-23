@@ -1,0 +1,208 @@
+/* Lokale Schriften: kommen aus node_modules und werden beim Build
+   mit in die Website kopiert. Kein Aufruf externer Server. */
+@import '@fontsource-variable/inter';
+@import '@fontsource/fraunces/latin-400.css';
+@import '@fontsource/fraunces/latin-600.css';
+
+:root {
+  /* Farben */
+  --c-bg: #f7f3ed;
+  --c-surface: #ffffff;
+  --c-surface-alt: #efe8de;
+  --c-text: #26211d;
+  --c-muted: #655c54;
+  --c-line: #e2d8ca;
+  --c-accent: #8f5428;
+  --c-accent-dark: #6e3f1c;
+  --c-dark: #2b2621;
+  --c-on-dark: #f3ece2;
+
+  /* Schriften */
+  --f-body: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --f-head: 'Fraunces', Georgia, 'Times New Roman', serif;
+
+  /* Maße */
+  --w-max: 72rem;
+  --gutter: clamp(1rem, 4vw, 2rem);
+  --space-section: clamp(3.5rem, 8vw, 6.5rem);
+  --radius: 10px;
+  --shadow: 0 1px 2px rgb(38 33 29 / 0.06), 0 8px 24px rgb(38 33 29 / 0.06);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--c-bg);
+  color: var(--c-text);
+  font-family: var(--f-body);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--f-head);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.6em;
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: clamp(2.2rem, 5.5vw, 3.6rem);
+}
+
+h2 {
+  font-size: clamp(1.7rem, 3.5vw, 2.4rem);
+}
+
+h3 {
+  font-size: 1.3rem;
+}
+
+p {
+  margin: 0 0 1em;
+  text-wrap: pretty;
+}
+
+a {
+  color: var(--c-accent);
+  text-underline-offset: 0.18em;
+}
+
+a:hover {
+  color: var(--c-accent-dark);
+}
+
+:focus-visible {
+  outline: 3px solid var(--c-accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Hilfsklassen */
+.container {
+  width: 100%;
+  max-width: var(--w-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  padding-block: var(--space-section);
+}
+
+.section--alt {
+  background: var(--c-surface-alt);
+}
+
+.eyebrow {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-accent);
+  margin-bottom: 0.9rem;
+}
+
+.lead {
+  font-size: 1.2rem;
+  color: var(--c-muted);
+  max-width: 40rem;
+}
+
+.section-head {
+  max-width: 44rem;
+  margin-bottom: clamp(2rem, 5vw, 3rem);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.4rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  border: 2px solid transparent;
+  transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.btn--primary {
+  background: var(--c-accent);
+  color: #fff;
+}
+
+.btn--primary:hover {
+  background: var(--c-accent-dark);
+  color: #fff;
+}
+
+.btn--ghost {
+  border-color: currentColor;
+  color: var(--c-text);
+}
+
+.btn--ghost:hover {
+  background: var(--c-text);
+  color: var(--c-bg);
+}
+
+.prose {
+  max-width: 44rem;
+}
+
+.prose h2 {
+  font-size: 1.6rem;
+  margin-top: 2.2em;
+}
+
+.prose h3 {
+  margin-top: 1.6em;
+}
+
+.prose ul {
+  padding-left: 1.2em;
+}
+
+.placeholder {
+  background: #fff1c7;
+  padding: 0 0.25em;
+  border-radius: 3px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
