@@ -45,6 +45,8 @@ Bearbeitbar sind:
 |---|---|---|
 | Startseite | Headline, Einleitungstext, Hero-Bild mit Alternativtext | `src/content/cms/startseite.yaml` |
 | Leistungen | Liste mit Titel, Kurzbeschreibung, Bild, optional ausführlicher Text und Stichpunkte. Hinzufügen, löschen, per Ziehen sortieren | `src/content/cms/leistungen.yaml` |
+| Über uns | Überschrift, Einleitung, Textabschnitte, Kennzahlen, Werte | `src/content/cms/ueber-uns.yaml` |
+| Ratgeber-Artikel | Artikel anlegen, bearbeiten, löschen. Titel, URL-Kürzel, SEO-Titel, Beschreibung, Datum, Kategorie, Entwurf, Text mit Zwischenüberschriften (H2/H3), Listen, Tabellen, Tipp-Kästen, Links. Infografik als fertiger Block einfügbar | `src/content/ratgeber/*.mdx` |
 | Kontaktdaten | Adresse, Telefon, E-Mail, Öffnungszeiten, Hinweis. Gilt für Header, Footer, Kontaktbereich, Impressum, Datenschutz und Schema.org | `src/content/cms/kontakt.yaml` |
 
 Welche Felder es gibt und welche Grenzen gelten (z. B. Zeichenanzahl), steht in `keystatic.config.ts`. Gelesen werden die Inhalte über `src/lib/cms.ts`. Design, Layout und Farben sind im CMS nicht bearbeitbar.
@@ -53,7 +55,8 @@ Welche Felder es gibt und welche Grenzen gelten (z. B. Zeichenanzahl), steht in 
 
 1. Neue Datei in `src/content/ratgeber/` anlegen, z. B. `holzpflege-im-winter.mdx`. Der Dateiname wird zur URL (`/ratgeber/holzpflege-im-winter/`).
 2. Oben die Angaben eintragen (Vorlage: vorhandener Artikel): `title`, `seoTitle` (optional), `description`, `pubDate`, `author`, `category`. Mit `draft: true` bleibt ein Artikel unveröffentlicht.
-3. Text in Markdown schreiben. Eigene Bausteine wie Infografiken lassen sich per `import` einbinden.
+3. Text in Markdown schreiben. Eigene Bausteine wie Infografiken werden in `src/pages/ratgeber/[slug].astro` bereitgestellt und in `keystatic.config.ts` als Block angemeldet. Im Artikel steht dann nur `<NameDesBausteins />`, keine `import`-Zeile (die kann Keystatic nicht verarbeiten).
+   Einfacher geht es über Keystatic unter „Ratgeber-Artikel“.
 4. Übersicht, Startseiten-Vorschau, Sitemap und Schema.org werden automatisch aktualisiert.
 
 FAQ der Startseite: `src/data/faq.ts`. Sichtbarer Text und Schema.org-FAQPage kommen aus derselben Liste.

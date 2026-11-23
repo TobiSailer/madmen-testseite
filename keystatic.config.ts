@@ -1,7 +1,8 @@
 // Keystatic: legt fest, welche Inhalte im CMS bearbeitet werden können.
 // Bearbeiter sehen nur diese Felder. Layout, Farben und Schriften bleiben im Code.
 // Admin-Oberfläche (nur lokal): http://localhost:4321/keystatic
-import { config, fields, singleton } from '@keystatic/core';
+import { collection, config, fields, singleton } from '@keystatic/core';
+import { block } from '@keystatic/core/content-components';
 
 const timePattern = {
   regex: /^([01]\d|2[0-3]):[0-5]\d$/,
@@ -14,9 +15,91 @@ export default config({
   ui: {
     brand: { name: 'Schreinerei Huber' },
     navigation: {
-      Seiten: ['startseite', 'leistungen'],
+      Seiten: ['startseite', 'leistungen', 'ueberUns'],
+      Ratgeber: ['ratgeber'],
       Einstellungen: ['kontakt'],
     },
+  },
+
+  collections: {
+    ratgeber: collection({
+      label: 'Ratgeber-Artikel',
+      path: 'src/content/ratgeber/*',
+      slugField: 'title',
+      format: { contentField: 'content' },
+      entryLayout: 'content',
+      columns: ['title', 'pubDate'],
+      previewUrl: '/ratgeber/{slug}/',
+      schema: {
+        title: fields.slug({
+          name: {
+            label: 'Titel (H1)',
+            validation: { isRequired: true, length: { max: 90 } },
+          },
+          slug: {
+            label: 'URL-Kürzel',
+            description: 'Wird Teil der Adresse: /ratgeber/url-kuerzel/. Nach der Veröffentlichung nicht mehr ändern.',
+          },
+        }),
+        seoTitle: fields.text({
+          label: 'SEO-Titel (optional)',
+          description: 'Titel im Browser-Tab und in Google, falls abweichend vom Titel. Höchstens 60 Zeichen.',
+          validation: { length: { max: 60 } },
+        }),
+        description: fields.text({
+          label: 'Beschreibung',
+          description: 'Meta-Description und Teaser auf der Übersicht. Ideal 140 bis 160 Zeichen.',
+          multiline: true,
+          validation: { isRequired: true, length: { min: 80, max: 170 } },
+        }),
+        pubDate: fields.date({ label: 'Veröffentlicht am', validation: { isRequired: true } }),
+        updatedDate: fields.date({ label: 'Aktualisiert am (optional)' }),
+        author: fields.text({ label: 'Autor', defaultValue: 'Michael Huber', validation: { isRequired: true } }),
+        category: fields.select({
+          label: 'Kategorie',
+          options: [
+            { label: 'Möbel nach Maß', value: 'Möbel nach Maß' },
+            { label: 'Küchen', value: 'Küchen' },
+            { label: 'Innenausbau', value: 'Innenausbau' },
+            { label: 'Türen und Fenster', value: 'Türen und Fenster' },
+            { label: 'Treppen', value: 'Treppen' },
+            { label: 'Holz und Pflege', value: 'Holz und Pflege' },
+          ],
+          defaultValue: 'Möbel nach Maß',
+        }),
+        draft: fields.checkbox({
+          label: 'Entwurf',
+          description: 'Angehakt: Artikel wird nicht veröffentlicht.',
+          defaultValue: false,
+        }),
+        content: fields.mdx({
+          label: 'Artikeltext',
+          extension: 'mdx',
+          options: {
+            heading: [2, 3],
+            bold: true,
+            italic: true,
+            strikethrough: false,
+            code: false,
+            codeBlock: false,
+            image: false,
+            blockquote: true,
+            orderedList: true,
+            unorderedList: true,
+            table: true,
+            link: true,
+            divider: true,
+          },
+          components: {
+            DachschraegeInfografik: block({
+              label: 'Infografik: Einbauschrank unter der Dachschräge',
+              description: 'Fertige Grafik mit vier Höhenzonen. Inhalt und Aussehen sind fest.',
+              schema: {},
+            }),
+          },
+        }),
+      },
+    }),
   },
 
   singletons: {
@@ -94,6 +177,65 @@ export default config({
             description: 'Reihenfolge per Ziehen ändern. Die Reihenfolge gilt für Startseite und Leistungsseite.',
             itemLabel: (props) => props.fields.title.value || 'Neue Leistung',
             validation: { length: { min: 1, max: 12 } },
+          },
+        ),
+      },
+    }),
+
+    ueberUns: singleton({
+      label: 'Über uns',
+      path: 'src/content/cms/ueber-uns',
+      schema: {
+        heroTitle: fields.text({
+          label: 'Überschrift (H1)',
+          validation: { isRequired: true, length: { max: 70 } },
+        }),
+        heroText: fields.text({
+          label: 'Einleitung',
+          multiline: true,
+          validation: { isRequired: true, length: { max: 280 } },
+        }),
+        sections: fields.array(
+          fields.object({
+            heading: fields.text({ label: 'Zwischenüberschrift', validation: { isRequired: true, length: { max: 80 } } }),
+            text: fields.text({
+              label: 'Text',
+              description: 'Absätze durch eine Leerzeile trennen. Höchstens 1200 Zeichen.',
+              multiline: true,
+              validation: { isRequired: true, length: { max: 1200 } },
+            }),
+          }),
+          {
+            label: 'Textabschnitte',
+            itemLabel: (props) => props.fields.heading.value || 'Neuer Abschnitt',
+            validation: { length: { min: 1, max: 4 } },
+          },
+        ),
+        facts: fields.array(
+          fields.object({
+            value: fields.text({ label: 'Zahl', description: 'z. B. 1987 oder 8', validation: { isRequired: true, length: { max: 8 } } }),
+            label: fields.text({ label: 'Beschriftung', validation: { isRequired: true, length: { max: 50 } } }),
+          }),
+          {
+            label: 'Kennzahlen',
+            description: 'Erscheinen als Kästen neben dem Text, höchstens 4.',
+            itemLabel: (props) => `${props.fields.value.value} ${props.fields.label.value}`.trim() || 'Neue Kennzahl',
+            validation: { length: { max: 4 } },
+          },
+        ),
+        valuesTitle: fields.text({
+          label: 'Überschrift "Werte"',
+          validation: { isRequired: true, length: { max: 70 } },
+        }),
+        values: fields.array(
+          fields.object({
+            title: fields.text({ label: 'Titel', validation: { isRequired: true, length: { max: 40 } } }),
+            text: fields.text({ label: 'Text', multiline: true, validation: { isRequired: true, length: { max: 280 } } }),
+          }),
+          {
+            label: 'Werte',
+            itemLabel: (props) => props.fields.title.value || 'Neuer Wert',
+            validation: { length: { max: 4 } },
           },
         ),
       },

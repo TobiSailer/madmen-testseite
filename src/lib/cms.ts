@@ -16,6 +16,23 @@ export async function getStartseite() {
   return required(await reader.singletons.startseite.read(), 'Startseite');
 }
 
+// ---------- Über uns ----------
+
+/** Teilt einen Text an Leerzeilen in Absätze. */
+export const toParagraphs = (text: string) =>
+  text
+    .split(/\n\s*\n/)
+    .map((p) => p.replace(/\s*\n\s*/g, ' ').trim())
+    .filter(Boolean);
+
+export async function getUeberUns() {
+  const data = required(await reader.singletons.ueberUns.read(), 'Über uns');
+  return {
+    ...data,
+    sections: data.sections.map((s) => ({ heading: s.heading, paragraphs: toParagraphs(s.text) })),
+  };
+}
+
 // ---------- Leistungen ----------
 
 export type Service = {

@@ -5,6 +5,8 @@ import { render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import JsonLd from '../../components/JsonLd.astro';
 import ContactSection from '../../components/ContactSection.astro';
+// Bausteine, die im Artikeltext (Keystatic) als Block eingefügt werden können
+import DachschraegeInfografik from '../../components/infografik/DachschraegeInfografik.astro';
 import { getPosts, formatDate, readingTime, type Post } from '../../utils/ratgeber';
 import { site } from '../../data/site';
 
@@ -51,7 +53,7 @@ const breadcrumbSchema = {
 };
 ---
 
-<BaseLayout title={seoTitle ?? `${title} | ${site.name}`} description={description} ogType="article">
+<BaseLayout title={seoTitle || `${title} | ${site.name}`} description={description} ogType="article">
   <JsonLd slot="head" data={articleSchema} />
   <JsonLd slot="head" data={breadcrumbSchema} />
 
@@ -90,7 +92,7 @@ const breadcrumbSchema = {
 
     <div class="section article-section">
       <div class="container article-narrow article-body">
-        <Content />
+        <Content components={{ DachschraegeInfografik }} />
       </div>
     </div>
 
