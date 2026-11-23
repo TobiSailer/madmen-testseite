@@ -1,0 +1,11 @@
+// Einstellungen für die Veröffentlichung auf Cloudflare (Workers mit statischen Dateien).
+// Cloudflare baut die Seite mit "npm run build" und veröffentlicht den Ordner dist/.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "schreinerei-huber",
+  "compatibility_date": "2026-11-01",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page"
+  }
+}
