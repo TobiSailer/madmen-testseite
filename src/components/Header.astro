@@ -1,6 +1,7 @@
 ---
 import { site, navigation } from '../data/site';
 import { getKontakt } from '../lib/cms';
+import Logo from './Logo.astro';
 
 const kontakt = await getKontakt();
 const current = Astro.url.pathname;
@@ -10,14 +11,7 @@ const isActive = (href: string) => (href === '/' ? current === '/' : current.sta
 <header class="header">
   <div class="container header__inner">
     <a href="/" class="logo" aria-label={`${site.name}, zur Startseite`}>
-      <svg class="logo__mark" viewBox="0 0 32 32" aria-hidden="true">
-        <rect width="32" height="32" rx="7" fill="#8f5428"></rect>
-        <path d="M9 9v14M23 9v14M9 16h14" stroke="#f7f3ed" stroke-width="3" stroke-linecap="round"></path>
-      </svg>
-      <span class="logo__text">
-        <span class="logo__name">Schreinerei Huber</span>
-        <span class="logo__place">Wolfratshausen</span>
-      </span>
+      <Logo />
     </a>
 
     <button class="nav-toggle" aria-expanded="false" aria-controls="hauptnavigation">
@@ -77,33 +71,8 @@ const isActive = (href: string) => (href === '/' ? current === '/' : current.sta
   .logo {
     display: flex;
     align-items: center;
-    gap: 0.7rem;
     text-decoration: none;
     color: var(--c-text);
-  }
-
-  .logo__mark {
-    width: 2.3rem;
-    height: 2.3rem;
-    flex-shrink: 0;
-  }
-
-  .logo__text {
-    display: flex;
-    flex-direction: column;
-    line-height: 1.15;
-  }
-
-  .logo__name {
-    font-family: var(--f-head);
-    font-weight: 600;
-    font-size: 1.15rem;
-  }
-
-  .logo__place {
-    font-size: 0.78rem;
-    color: var(--c-muted);
-    letter-spacing: 0.04em;
   }
 
   .nav ul {

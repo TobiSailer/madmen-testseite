@@ -3,6 +3,7 @@ import { site, navigation, legalNavigation } from '../data/site';
 import { getKontakt } from '../lib/cms';
 import { awards } from '../data/trust';
 import GoogleRating from './GoogleRating.astro';
+import Logo from './Logo.astro';
 
 const kontakt = await getKontakt();
 const year = new Date().getFullYear();
@@ -11,7 +12,7 @@ const year = new Date().getFullYear();
 <footer class="footer">
   <div class="container footer__grid">
     <div>
-      <p class="footer__name">{site.name}</p>
+      <a href="/" class="footer__logo" aria-label={`${site.name}, zur Startseite`}><Logo tone="dark" size="lg" /></a>
       <p class="footer__claim">{site.claim}</p>
     </div>
 
@@ -79,11 +80,13 @@ const year = new Date().getFullYear();
     padding-bottom: 2.5rem;
   }
 
-  .footer__name {
-    font-family: var(--f-head);
-    font-size: 1.4rem;
-    font-weight: 600;
-    margin-bottom: 0.3rem;
+  .footer__logo {
+    display: inline-block;
+    margin-bottom: 0.9rem;
+  }
+
+  .footer .footer__logo:hover {
+    text-decoration: none;
   }
 
   .footer__claim {
