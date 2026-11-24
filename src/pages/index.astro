@@ -35,6 +35,7 @@ const steps = [
     image={{ src: startseite.heroImage, alt: startseite.heroImageAlt }}
     primary={{ href: '/kontakt/', label: 'Beratung anfragen' }}
     secondary={{ href: '/leistungen/', label: 'Unsere Leistungen' }}
+    fan={services.slice(0, 4).map((s) => s.image)}
   >
     <div class="hero-rating"><GoogleRating /></div>
   </Hero>

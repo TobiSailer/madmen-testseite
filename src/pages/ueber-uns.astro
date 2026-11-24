@@ -12,7 +12,16 @@ const page = await getUeberUns();
   title="Über uns: Familienbetrieb seit 1987 | Schreinerei Huber"
   description="Die Schreinerei Huber ist ein Familienbetrieb aus Wolfratshausen. Erfahren Sie mehr über unsere Werkstatt, unser Team und wie wir arbeiten."
 >
-  <Hero eyebrow="Über uns" title={page.heroTitle} text={page.heroText} />
+  <Hero
+    eyebrow="Über uns"
+    title={page.heroTitle}
+    text={page.heroText}
+    collage={[
+      '/images/startseite/hero.webp',
+      '/images/leistungen/innenausbau.webp',
+      '/images/leistungen/moebel-nach-mass.webp',
+    ]}
+  />
 
   <section class="section">
     <div class:list={['container', 'about', { 'about--no-facts': page.facts.length === 0 }]}>

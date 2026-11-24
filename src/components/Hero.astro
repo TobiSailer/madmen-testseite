@@ -9,12 +9,18 @@ interface Props {
   secondary?: { href: string; label: string };
   variant?: 'home' | 'page';
   image?: { src: string; alt: string }; // nur bei variant="home"
+  collage?: string[]; // nur bei variant="page": 2 bis 3 Bildpfade für die Foto-Collage rechts
+  fan?: string[]; // nur bei variant="home": bis zu 4 Bildpfade, die hinter dem Hauptfoto aufgefächert werden
 }
 
-const { eyebrow, title, text, primary, secondary, variant = 'page', image } = Astro.props;
+const { eyebrow, title, text, primary, secondary, variant = 'page', image, collage = [], fan = [] } = Astro.props;
+const collageImages = variant === 'page' ? collage.filter(Boolean).slice(0, 3) : [];
+const hasCollage = collageImages.length >= 2;
+const fanImages = variant === 'home' && image ? fan.filter(Boolean).slice(0, 4) : [];
+const hasFan = fanImages.length > 0;
 ---
 
-<section class:list={['hero', `hero--${variant}`]}>
+<section class:list={['hero', `hero--${variant}`, { 'hero--collage': hasCollage, 'hero--fan': hasFan }]}>
   <div class="container hero__inner">
     <div class="hero__content">
       {eyebrow && <span class="eyebrow">{eyebrow}</span>}
@@ -32,7 +38,28 @@ const { eyebrow, title, text, primary, secondary, variant = 'page', image } = As
     </div>
 
     {
-      variant === 'home' && image && (
+      hasFan && image && (
+        <div class="hero__stage">
+          {fanImages.map((src, i) => (
+            // Dekorativ: Leistungsfotos als Hintergrund-Abzüge
+            <figure class:list={['print', 'print--fan', `print--fan-${i + 1}`]} aria-hidden="true">
+              <img src={src} alt="" width="1264" height="848" decoding="async" fetchpriority="low" />
+            </figure>
+          ))}
+          <figure class="print print--main">
+            {/* Bild wird im CMS gepflegt (Keystatic: Startseite > Hero-Bild) */}
+            <img src={image.src} alt={image.alt} width="1264" height="848" fetchpriority="high" decoding="async" />
+            <p class="hero__badge" aria-hidden="true">
+              <strong>Seit 1987</strong>
+              <span>Meisterbetrieb im Isartal</span>
+            </p>
+          </figure>
+        </div>
+      )
+    }
+
+    {
+      variant === 'home' && image && !hasFan && (
         <div class="hero__visual">
           {/* Bild wird im CMS gepflegt (Keystatic: Startseite > Hero-Bild) */}
           <img src={image.src} alt={image.alt} width="1264" height="848" fetchpriority="high" decoding="async" />
@@ -43,8 +70,45 @@ const { eyebrow, title, text, primary, secondary, variant = 'page', image } = As
         </div>
       )
     }
+
+    {
+      hasCollage && (
+        // Dekorativ: Überschrift und Einleitung daneben tragen den Inhalt
+        <div class:list={['hero__collage', `hero__collage--${collageImages.length}`]} aria-hidden="true">
+          {collageImages.map((src) => (
+            <figure class="print">
+              <img src={src} alt="" width="1264" height="848" decoding="async" />
+            </figure>
+          ))}
+        </div>
+      )
+    }
   </div>
 </section>
+
+<script>
+  // Startseite: Abzüge bewegen sich beim Scrollen unterschiedlich schnell (Tiefenwirkung).
+  // Aus bei "Bewegung reduzieren" und auf schmalen Bildschirmen.
+  const stage = document.querySelector<HTMLElement>('.hero__stage');
+  if (stage) {
+    const calm = window.matchMedia('(prefers-reduced-motion: reduce), (max-width: 52rem)');
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      const y = calm.matches ? 0 : Math.min(window.scrollY, 900);
+      stage.style.setProperty('--scroll', String(Math.round(y)));
+    };
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    calm.addEventListener('change', update);
+    update();
+  }
+</script>
 
 <style>
   .hero {
@@ -113,13 +177,262 @@ const { eyebrow, title, text, primary, secondary, variant = 'page', image } = As
     color: var(--c-muted);
   }
 
+  /* ---------- Unterseiten mit Foto-Collage ---------- */
+  .hero--collage .hero__inner {
+    grid-template-columns: 1.1fr 0.9fr;
+  }
+
+  .hero__collage {
+    position: relative;
+    aspect-ratio: 5 / 4;
+    width: 100%;
+  }
+
+  /* Ein Bild wie ein ausgelegter Fotoabzug: weißer Rand, Schatten, leicht gedreht */
+  .print {
+    position: absolute;
+    margin: 0;
+    padding: 0.45rem;
+    background: var(--c-surface);
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgb(38 33 29 / 0.08), 0 14px 32px rgb(38 33 29 / 0.16);
+    transform: rotate(var(--rot));
+    animation: print-in 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+
+  .print img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 3px;
+    background: var(--c-surface-alt);
+  }
+
+  /* drei Bilder: oben links, rechts, unten vorne */
+  .hero__collage .print:nth-child(1) {
+    --rot: -4deg;
+    top: 2%;
+    left: 0;
+    width: 54%;
+    z-index: 1;
+  }
+
+  .hero__collage .print:nth-child(2) {
+    --rot: 3deg;
+    top: 14%;
+    right: 0;
+    width: 50%;
+    z-index: 2;
+    animation-delay: 0.12s;
+  }
+
+  .hero__collage .print:nth-child(3) {
+    --rot: -1.5deg;
+    bottom: 0;
+    left: 22%;
+    width: 56%;
+    z-index: 3;
+    animation-delay: 0.24s;
+  }
+
+  /* zwei Bilder: oben links und unten rechts */
+  .hero__collage--2 .print:nth-child(2) {
+    --rot: 2deg;
+    top: auto;
+    bottom: 0;
+    width: 60%;
+  }
+
+  /* ---------- Startseite: Foto-Fächer ---------- */
+  .hero--fan {
+    overflow-x: clip; /* Abzüge dürfen über den Rand ragen, ohne seitliches Scrollen */
+  }
+
+  .hero--fan .hero__inner {
+    grid-template-columns: 0.95fr 1.15fr;
+  }
+
+  .hero__stage {
+    position: relative;
+    aspect-ratio: 1 / 1.02;
+    width: 100%;
+  }
+
+  .hero__stage .print {
+    /* Tiefenwirkung beim Scrollen: je größer --depth, desto schneller wandert der Abzug */
+    translate: 0 calc(var(--scroll, 0) * var(--depth, 0.1) * -1px);
+    animation: fan-in 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    will-change: translate;
+  }
+
+  .print--main {
+    --rot: 2deg;
+    --depth: 0.03;
+    --fx: 40px;
+    --fy: 30px;
+    top: 3%;
+    right: 3%;
+    width: 60%;
+    z-index: 5;
+    padding: 0.6rem;
+  }
+
+  .print--main img {
+    aspect-ratio: 5 / 6;
+    object-position: 85% center;
+  }
+
+  .print--main .hero__badge {
+    left: 1.5rem;
+    bottom: 1.5rem;
+  }
+
+  .print--fan-1 {
+    --rot: -7deg;
+    --depth: 0.16;
+    --fx: 120px;
+    --fy: -40px;
+    top: 0;
+    left: 4%;
+    width: 40%;
+    z-index: 1;
+    animation-delay: 0.18s;
+  }
+
+  .print--fan-2 {
+    --rot: 5deg;
+    --depth: 0.22;
+    --fx: 160px;
+    --fy: 10px;
+    top: 31%;
+    left: -3%;
+    width: 42%;
+    z-index: 2;
+    animation-delay: 0.28s;
+  }
+
+  .print--fan-3 {
+    --rot: -3deg;
+    --depth: 0.12;
+    --fx: 120px;
+    --fy: 60px;
+    bottom: 0;
+    left: 12%;
+    width: 42%;
+    z-index: 3;
+    animation-delay: 0.38s;
+  }
+
+  .print--fan-4 {
+    --rot: 6deg;
+    --depth: 0.28;
+    --fx: -60px;
+    --fy: 80px;
+    bottom: -3%;
+    right: -12%;
+    width: 38%;
+    z-index: 6;
+    animation-delay: 0.48s;
+  }
+
+  @keyframes fan-in {
+    from {
+      opacity: 0;
+      transform: translate(var(--fx, 0), var(--fy, 0)) rotate(calc(var(--rot) * 3)) scale(0.94);
+    }
+    to {
+      opacity: 1;
+      transform: rotate(var(--rot));
+    }
+  }
+
+  @keyframes print-in {
+    from {
+      opacity: 0;
+      transform: translateY(14px) rotate(calc(var(--rot) * 2.5));
+    }
+    to {
+      opacity: 1;
+      transform: rotate(var(--rot));
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .print,
+    .hero__stage .print {
+      animation: none;
+      translate: none;
+    }
+  }
+
   @media (max-width: 52rem) {
-    .hero--home .hero__inner {
+    .hero--home .hero__inner,
+    .hero--collage .hero__inner,
+    .hero--fan .hero__inner {
       grid-template-columns: 1fr;
+    }
+
+    .hero__stage {
+      aspect-ratio: 1 / 0.9;
+      max-width: 30rem;
+      justify-self: center;
+    }
+
+    .hero__stage .print {
+      translate: none;
+    }
+
+    .print--main {
+      top: 0;
+      right: 2%;
+      width: 58%;
+      padding: 0.45rem;
+    }
+
+    .print--main .hero__badge {
+      left: 0.6rem;
+      bottom: 0.6rem;
+      padding: 0.45rem 0.65rem;
+      border-radius: 8px;
+    }
+
+    .print--main .hero__badge strong {
+      font-size: 0.95rem;
+    }
+
+    .print--main .hero__badge span {
+      font-size: 0.72rem;
+      white-space: nowrap;
+    }
+
+    .print--fan-1 {
+      top: 6%;
+      left: 0;
+      width: 50%;
+    }
+
+    .print--fan-2 {
+      top: auto;
+      bottom: 0;
+      left: 8%;
+      width: 52%;
+    }
+
+    .print--fan-3,
+    .print--fan-4 {
+      display: none;
     }
 
     .hero__visual {
       aspect-ratio: 16 / 10;
+    }
+
+    .hero__collage {
+      max-width: 26rem;
+      justify-self: center;
+      aspect-ratio: 4 / 3;
+      margin-top: 0.5rem;
     }
   }
 </style>
