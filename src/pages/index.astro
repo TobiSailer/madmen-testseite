@@ -5,6 +5,8 @@ import ServiceCard from '../components/ServiceCard.astro';
 import ContactSection from '../components/ContactSection.astro';
 import FaqSection from '../components/FaqSection.astro';
 import ArticleCard from '../components/ArticleCard.astro';
+import GoogleRating from '../components/GoogleRating.astro';
+import TrustBar from '../components/TrustBar.astro';
 import { site } from '../data/site';
 import { faqs } from '../data/faq';
 import { getPosts } from '../utils/ratgeber';
@@ -33,7 +35,11 @@ const steps = [
     image={{ src: startseite.heroImage, alt: startseite.heroImageAlt }}
     primary={{ href: '/kontakt/', label: 'Beratung anfragen' }}
     secondary={{ href: '/leistungen/', label: 'Unsere Leistungen' }}
-  />
+  >
+    <div class="hero-rating"><GoogleRating /></div>
+  </Hero>
+
+  <TrustBar />
 
   <section class="section section--alt" aria-labelledby="leistungen-titel">
     <div class="container">
@@ -118,6 +124,10 @@ const steps = [
 </BaseLayout>
 
 <style>
+  .hero-rating {
+    margin-top: 1.75rem;
+  }
+
   .grid-cards {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));

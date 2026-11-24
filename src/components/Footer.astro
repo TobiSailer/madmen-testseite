@@ -1,6 +1,8 @@
 ---
 import { site, navigation, legalNavigation } from '../data/site';
 import { getKontakt } from '../lib/cms';
+import { awards } from '../data/trust';
+import GoogleRating from './GoogleRating.astro';
 
 const kontakt = await getKontakt();
 const year = new Date().getFullYear();
@@ -36,6 +38,13 @@ const year = new Date().getFullYear();
         {navigation.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
       </ul>
     </nav>
+  </div>
+
+  <div class="container footer__trust">
+    <GoogleRating tone="dark" />
+    <ul class="footer__awards" aria-label="Auszeichnungen">
+      {awards.map((a) => <li><img src={a.image} alt={a.title} title={a.title} width="200" height="200" loading="lazy" decoding="async" /></li>)}
+    </ul>
   </div>
 
   <div class="container footer__bottom">
@@ -100,6 +109,30 @@ const year = new Date().getFullYear();
     margin: 0;
     padding: 0;
     line-height: 1.9;
+  }
+
+  .footer__trust {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem 2rem;
+    padding-block: 1.5rem;
+    border-top: 1px solid rgb(243 236 226 / 0.15);
+  }
+
+  .footer__awards {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer__awards img {
+    width: 3.5rem;
+    height: 3.5rem;
   }
 
   .footer__bottom {

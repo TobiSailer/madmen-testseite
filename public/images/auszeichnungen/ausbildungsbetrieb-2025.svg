@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img"><title>Ausgezeichneter Ausbildungsbetrieb 2025</title>
+<path d="M100 6 L178 32 V94 C178 146 144 177 100 195 C56 177 22 146 22 94 V32 Z" fill="#2f5d46"/>
+<path d="M100 18 L166 40 V94 C166 139 137 165 100 181 C63 165 34 139 34 94 V40 Z" fill="none" stroke="#e9d8a6" stroke-width="2"/>
+<g fill="#e9d8a6"><path d="M100 44 L132 57 L100 70 L68 57 Z"/><path d="M84 64 V74 C84 81 116 81 116 74 V64 L100 71 Z"/><path d="M128 59 V74" stroke="#e9d8a6" stroke-width="2"/><circle cx="128" cy="76" r="3"/></g>
+<text x="100" y="102" text-anchor="middle" font-family="'Helvetica Neue', Arial, sans-serif" font-size="10" font-weight="700" fill="#f3ece2" letter-spacing="1.4">AUSGEZEICHNETER</text>
+<text x="100" y="121" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="15" font-weight="700" fill="#f3ece2">Ausbildungs-</text>
+<text x="100" y="138" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="15" font-weight="700" fill="#f3ece2">betrieb</text>
+<text x="100" y="162" text-anchor="middle" font-family="'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="700" fill="#e9d8a6" letter-spacing="3">2025</text>
+</svg>

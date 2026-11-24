@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img"><title>Meisterbetrieb im Schreinerhandwerk seit 1987</title>
+<defs><path id="t" d="M31,100 A69,69 0 0,1 169,100"/><path id="b" d="M18,100 A82,82 0 0,0 182,100"/></defs>
+<circle cx="100" cy="100" r="96" fill="#6e3f1c"/>
+<circle cx="100" cy="100" r="89" fill="none" stroke="#d4a85a" stroke-width="2"/>
+<circle cx="100" cy="100" r="61" fill="#8f5428" stroke="#d4a85a" stroke-width="2"/>
+<text font-family="'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#f3ece2" letter-spacing="1.6" text-anchor="middle"><textPath href="#t" startOffset="50%">MEISTERBETRIEB</textPath></text><text font-family="'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="700" fill="#f3ece2" letter-spacing="1.6" text-anchor="middle"><textPath href="#b" startOffset="50%">SCHREINERHANDWERK</textPath></text><g fill="#f3ece2"><circle cx="18" cy="100" r="2.5"/><circle cx="182" cy="100" r="2.5"/></g>
+<g fill="none" stroke="#f3ece2" stroke-width="6" stroke-linecap="square"><path d="M82 66 V108 H122"/></g>
+<g stroke="#d4a85a" stroke-width="2"><path d="M88 76h6M88 86h6M88 96h6M98 102v-6M108 102v-6"/></g>
+<text x="100" y="138" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="17" font-weight="700" fill="#f3ece2" letter-spacing="1">SEIT 1987</text>
+</svg>

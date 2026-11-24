@@ -1,0 +1,103 @@
+---
+// Trust-Leiste unter dem Hero: Google-Bewertung und Auszeichnungen.
+// Inhalte pflegen in src/data/trust.ts.
+import GoogleRating from './GoogleRating.astro';
+import { awards, isDemoData } from '../data/trust';
+---
+
+<section class="trust" aria-labelledby="trust-titel">
+  <div class="container trust__inner">
+    <h2 id="trust-titel" class="visually-hidden">Bewertungen und Auszeichnungen</h2>
+
+    <GoogleRating variant="card" />
+
+    <ul class="trust__awards">
+      {
+        awards.map((a) => (
+          <li class="award">
+            <img src={a.image} alt="" width="200" height="200" loading="lazy" decoding="async" />
+            <span class="award__title">{a.title}</span>
+            <span class="award__text">{a.text}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  {
+    isDemoData && (
+      <p class="container trust__note">Beispieldaten: Bewertungen und Auszeichnungen sind für diese Testseite ausgedacht.</p>
+    )
+  }
+</section>
+
+<style>
+  .trust {
+    background: var(--c-surface);
+    border-block: 1px solid var(--c-line);
+    padding-block: clamp(2rem, 4vw, 2.75rem) 1.25rem;
+  }
+
+  .trust__inner {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: clamp(1.5rem, 4vw, 3rem);
+    align-items: center;
+  }
+
+  .trust__awards {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  .award {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.2rem;
+  }
+
+  .award img {
+    width: 5.5rem;
+    height: 5.5rem;
+    margin-bottom: 0.5rem;
+    filter: drop-shadow(0 4px 8px rgb(38 33 29 / 0.12));
+  }
+
+  .award__title {
+    font-weight: 600;
+    font-size: 0.92rem;
+    line-height: 1.3;
+  }
+
+  .award__text {
+    font-size: 0.82rem;
+    color: var(--c-muted);
+    line-height: 1.35;
+  }
+
+  .trust__note {
+    margin-top: 1.5rem;
+    margin-bottom: 0;
+    font-size: 0.78rem;
+    color: var(--c-muted);
+  }
+
+  @media (max-width: 60rem) {
+    .trust__inner {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 36rem) {
+    .trust__awards {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      row-gap: 1.75rem;
+    }
+  }
+</style>
