@@ -35,7 +35,7 @@ const { eyebrow, title, text, primary, secondary, variant = 'page', image } = As
       variant === 'home' && image && (
         <div class="hero__visual">
           {/* Bild wird im CMS gepflegt (Keystatic: Startseite > Hero-Bild) */}
-          <img src={image.src} alt={image.alt} width="1000" height="1200" fetchpriority="high" decoding="async" />
+          <img src={image.src} alt={image.alt} width="1264" height="848" fetchpriority="high" decoding="async" />
           <p class="hero__badge" aria-hidden="true">
             <strong>Seit 1987</strong>
             <span>Meisterbetrieb im Isartal</span>
@@ -85,6 +85,8 @@ const { eyebrow, title, text, primary, secondary, variant = 'page', image } = As
     width: 100%;
     height: 100%;
     object-fit: cover;
+    /* Hochformat-Ausschnitt aus Querformat-Foto: Motiv sitzt rechts im Bild */
+    object-position: 85% center;
   }
 
   .hero__badge {

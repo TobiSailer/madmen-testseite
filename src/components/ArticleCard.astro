@@ -14,18 +14,25 @@ const href = `/ratgeber/${post.id}/`;
 
 <article class="article-card">
   <div class="article-card__visual" aria-hidden="true">
-    <svg viewBox="0 0 320 140" preserveAspectRatio="xMidYMid slice">
-      <rect width="320" height="140" fill="#efe8de"></rect>
-      <path d="M0 140 L0 40 L120 40 L220 140 Z" fill="#e2d8ca"></path>
-      <path d="M0 40 L120 40 L220 140" fill="none" stroke="#8f5428" stroke-width="3"></path>
-      <g fill="#8f5428" opacity="0.85">
-        <rect x="20" y="58" width="26" height="74" rx="3"></rect>
-        <rect x="52" y="58" width="26" height="74" rx="3"></rect>
-        <rect x="84" y="58" width="26" height="74" rx="3"></rect>
-        <rect x="128" y="94" width="40" height="16" rx="2"></rect>
-        <rect x="128" y="114" width="40" height="16" rx="2"></rect>
-      </g>
-    </svg>
+    {
+      post.data.image ? (
+        // Dekorativ: Titel und Teasertext direkt daneben beschreiben den Inhalt
+        <img src={post.data.image} alt="" width="1264" height="848" loading="lazy" decoding="async" />
+      ) : (
+        <svg viewBox="0 0 320 140" preserveAspectRatio="xMidYMid slice">
+          <rect width="320" height="140" fill="#efe8de" />
+          <path d="M0 140 L0 40 L120 40 L220 140 Z" fill="#e2d8ca" />
+          <path d="M0 40 L120 40 L220 140" fill="none" stroke="#8f5428" stroke-width="3" />
+          <g fill="#8f5428" opacity="0.85">
+            <rect x="20" y="58" width="26" height="74" rx="3" />
+            <rect x="52" y="58" width="26" height="74" rx="3" />
+            <rect x="84" y="58" width="26" height="74" rx="3" />
+            <rect x="128" y="94" width="40" height="16" rx="2" />
+            <rect x="128" y="114" width="40" height="16" rx="2" />
+          </g>
+        </svg>
+      )
+    }
     <span class="article-card__cat">{post.data.category}</span>
   </div>
   <div class="article-card__body">
@@ -63,11 +70,17 @@ const href = `/ratgeber/${post.id}/`;
     min-height: 12rem;
   }
 
-  .article-card__visual svg {
+  .article-card__visual svg,
+  .article-card__visual img {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
+  }
+
+  .article-card__visual img {
+    object-fit: cover;
+    background: var(--c-surface-alt);
   }
 
   .article-card__cat {

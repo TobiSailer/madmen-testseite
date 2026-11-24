@@ -3,7 +3,8 @@ items:
     short: >-
       Schränke, Regale und Tische, die genau in Ihren Raum passen, auch unter
       Dachschrägen.
-    image: /images/leistungen/moebel-nach-mass.svg
+    image: /images/leistungen/moebel-nach-mass.webp
+    imageAlt: Maßgefertigte Bücherwand mit Leseplatz am Fenster.
     long: >-
       Wir planen und bauen Möbel, die sich nach dem Raum richten und nicht
       umgekehrt. Ob Einbauschrank unter der Dachschräge, Bücherwand oder Esstisch
@@ -17,7 +18,8 @@ items:
     short: >-
       Küchen aus der eigenen Werkstatt, geplant nach Ihren Abläufen und Ihrem
       Budget.
-    image: /images/leistungen/kuechen.svg
+    image: /images/leistungen/kuechen.webp
+    imageAlt: Helle Holzküche mit Griffmulden und einem Bewohner bei der Essensvorbereitung.
     long: >-
       Eine Küche wird täglich benutzt. Deshalb planen wir sie mit Ihnen gemeinsam
       nach Ihren Abläufen, wählen passende Geräte aus und bauen Fronten und
@@ -30,7 +32,8 @@ items:
     short: >-
       Wandverkleidungen, Decken und Akustiklösungen für Wohnräume, Praxen und
       Büros.
-    image: /images/leistungen/innenausbau.svg
+    image: /images/leistungen/innenausbau.webp
+    imageAlt: Sitznische mit Holzverkleidung und senkrechten Akustiklamellen.
     long: >-
       Holz verändert die Wirkung eines Raums. Wir verkleiden Wände und Decken,
       bauen Akustikelemente für bessere Raumakustik und statten Praxen, Kanzleien
@@ -43,7 +46,8 @@ items:
     short: >-
       Innentüren, Haustüren und Holzfenster, neu gefertigt oder fachgerecht
       aufgearbeitet.
-    image: /images/leistungen/tueren-fenster.svg
+    image: /images/leistungen/tueren-fenster.webp
+    imageAlt: Geöffnete Holztür neben einem gerahmten Holzfenster.
     long: >-
       Wir liefern und montieren Innentüren und Haustüren und fertigen
       Holzfenster für Alt- und Neubau. Bei denkmalgeschützten Gebäuden arbeiten
@@ -56,7 +60,8 @@ items:
     short: >-
       Holztreppen für Neubau und Renovierung, inklusive Belegung bestehender
       Betontreppen.
-    image: /images/leistungen/treppen.svg
+    image: /images/leistungen/treppen.webp
+    imageAlt: Holztreppe mit Handlauf im Eingangsbereich.
     long: >-
       Ob neue Wangentreppe oder die Belegung einer bestehenden Betontreppe mit
       Holzstufen: Wir messen auf, planen und montieren Treppen, die sicher sind
@@ -69,7 +74,8 @@ items:
     short: >-
       Klemmende Türen, lose Scharniere oder beschädigte Möbel: Wir reparieren,
       statt zu ersetzen.
-    image: /images/leistungen/reparaturen.svg
+    image: /images/leistungen/reparaturen.webp
+    imageAlt: Ein Scharnier an einem älteren Holzmöbel wird nachgestellt.
     long: >-
       Viele Holzarbeiten lassen sich mit überschaubarem Aufwand reparieren. Wir
       kommen vorbei, schauen uns den Schaden an und sagen Ihnen offen, ob sich

@@ -18,6 +18,7 @@ const ratgeber = defineCollection({
     updatedDate: z.preprocess(emptyToUndefined, z.coerce.date().optional()),
     author: z.string(),
     category: z.string(),
+    image: z.preprocess(emptyToUndefined, z.string().optional()), // Teaser-Bild, ohne Angabe erscheint die Standardgrafik
     draft: z.boolean().default(false), // true: Artikel wird nicht veröffentlicht
   }),
 });

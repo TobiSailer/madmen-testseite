@@ -28,7 +28,7 @@ const services = await getLeistungen();
         {
           services.map((s) => (
             <article id={s.id} class="service">
-              <img class="service__image" src={s.image} alt="" width="1200" height="750" loading="lazy" decoding="async" />
+              <img class="service__image" src={s.image} alt={s.imageAlt} width="1264" height="848" loading="lazy" decoding="async" />
               <div>
                 <h2>{s.title}</h2>
                 <p>{s.long}</p>

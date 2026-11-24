@@ -41,6 +41,7 @@ export type Service = {
   short: string;
   long: string;
   image: string;
+  imageAlt: string; // leer = Bild gilt als dekorativ
   points: string[];
 };
 
@@ -64,6 +65,7 @@ export async function getLeistungen(): Promise<Service[]> {
     short: item.short,
     long: item.long || item.short,
     image: item.image ?? '',
+    imageAlt: item.imageAlt ?? '',
     points: item.points.filter(Boolean),
   }));
 }

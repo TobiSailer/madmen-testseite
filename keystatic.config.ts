@@ -77,6 +77,12 @@ export default config({
           ],
           defaultValue: 'Möbel nach Maß',
         }),
+        image: fields.image({
+          label: 'Teaser-Bild (optional)',
+          description: 'Bild auf der Artikelkarte in Startseite und Ratgeber-Übersicht. Querformat, ideal ca. 1200 × 800 Pixel. Ohne Bild erscheint eine Standardgrafik.',
+          directory: 'public/images/ratgeber',
+          publicPath: '/images/ratgeber/',
+        }),
         draft: fields.checkbox({
           label: 'Entwurf',
           description: 'Angehakt: Artikel wird nicht veröffentlicht.',
@@ -165,6 +171,11 @@ export default config({
               directory: 'public/images/leistungen',
               publicPath: '/images/leistungen/',
               validation: { isRequired: true },
+            }),
+            imageAlt: fields.text({
+              label: 'Bildbeschreibung (Alternativtext)',
+              description: 'Beschreibt das Bild auf der Seite "Leistungen" für Screenreader und Suchmaschinen, z. B. "Holztreppe mit Handlauf im Eingangsbereich". Höchstens 140 Zeichen. Auf den Karten der Startseite bleibt das Bild ohne Beschreibung, weil der Titel direkt daneben steht.',
+              validation: { length: { max: 140 } },
             }),
             long: fields.text({
               label: 'Ausführliche Beschreibung (optional)',
