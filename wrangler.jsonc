@@ -12,5 +12,8 @@
   // Adresse unter *.workers.dev aktiv lassen
   "workers_dev": true,
   // Eigene Vorschau-Adressen für Branches und Versionen
-  "preview_urls": true
+  "preview_urls": true,
+  // Im Dashboard angelegte Variablen beim Deploy nicht löschen.
+  // Wichtig: Keystatic-Zugangsdaten trotzdem immer als Typ "Secret" anlegen.
+  "keep_vars": true
 }
