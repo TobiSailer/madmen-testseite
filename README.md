@@ -33,9 +33,21 @@ Cloudflare (Workers mit statischen Dateien) ist mit diesem GitHub-Repository ver
 
 ## Inhalte bearbeiten mit Keystatic (CMS)
 
-Keystatic läuft im lokalen Modus: Die Bearbeitungsoberfläche gibt es nur auf dem eigenen Rechner, nicht auf der Live-Seite.
+### Online (GitHub-Modus)
 
-1. `npm run dev` starten und http://localhost:4321/keystatic öffnen.
+1. https://schreinerei-huber.t-sailer.workers.dev/keystatic öffnen und mit GitHub anmelden. Bearbeiten darf nur, wer Schreibrechte auf dieses Repository hat.
+2. Inhalte ändern und auf **Save** klicken. Jede Speicherung wird ein Commit im Repository.
+3. Cloudflare baut die Seite automatisch neu, nach etwa einer Minute ist die Änderung live.
+
+Technik: Die Seiten sind statisches HTML. Nur `/keystatic` und `/api/keystatic` laufen als Server-Teil auf Cloudflare (Astro-Adapter `@astrojs/cloudflare`, nur im Build aktiv). Die GitHub-App heißt wie in `.env.production` angegeben. Ihre geheimen Zugangsdaten liegen lokal in `.env` (nicht im Repository) und bei Cloudflare unter Worker „schreinerei-huber“ → Settings → Variables and Secrets: `KEYSTATIC_GITHUB_CLIENT_ID`, `KEYSTATIC_GITHUB_CLIENT_SECRET`, `KEYSTATIC_SECRET`.
+
+Wichtig: Wer online speichert, ändert das Repository. Vor lokaler Arbeit deshalb immer zuerst `git pull` ausführen, sonst gibt es beim nächsten `git push` Konflikte.
+
+### Lokal
+
+Die Bearbeitungsoberfläche läuft auch auf dem eigenen Rechner und speichert dort direkt in die Dateien.
+
+1. `npm run dev` starten und http://localhost:4321/keystatic öffnen. (Im GitHub-Modus lokal: `PUBLIC_KEYSTATIC_STORAGE=github npm run dev`.)
 2. Inhalte ändern und oben rechts auf **Save** klicken. Keystatic speichert direkt in die Dateien unter `src/content/cms/` (Texte) und `public/images/` (Bilder). Die lokale Vorschau zeigt die Änderung sofort.
 3. Veröffentlichen: Änderungen per Git committen und mit `git push` hochladen. Cloudflare baut die Seite danach automatisch neu.
 
