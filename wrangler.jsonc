@@ -1,15 +1,16 @@
-// Einstellungen für die Veröffentlichung auf Cloudflare (Workers mit statischen Dateien).
-// Cloudflare baut die Seite mit "npm run build" und veröffentlicht den Ordner dist/.
+// Einstellungen für die Veröffentlichung auf Cloudflare Workers.
+// Cloudflare baut die Seite mit "npm run build" und veröffentlicht sie mit
+// "npx wrangler deploy". Statische Seiten kommen direkt aus dem Speicher,
+// /keystatic und /api/keystatic laufen als Server-Teil (Astro-Adapter).
+// Zugangsdaten für Keystatic stehen NICHT hier, sondern als Secrets im
+// Cloudflare-Dashboard (Worker > Settings > Variables and Secrets).
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "schreinerei-huber",
   "compatibility_date": "2026-11-01",
+  "compatibility_flags": ["nodejs_compat"],
   // Adresse unter *.workers.dev aktiv lassen
   "workers_dev": true,
   // Eigene Vorschau-Adressen für Branches und Versionen
-  "preview_urls": true,
-  "assets": {
-    "directory": "./dist",
-    "not_found_handling": "404-page"
-  }
+  "preview_urls": true
 }

@@ -1,6 +1,12 @@
 // Keystatic: legt fest, welche Inhalte im CMS bearbeitet werden können.
 // Bearbeiter sehen nur diese Felder. Layout, Farben und Schriften bleiben im Code.
-// Admin-Oberfläche (nur lokal): http://localhost:4321/keystatic
+//
+// Zwei Speicherorte:
+// - Lokal (npm run dev): http://localhost:4321/keystatic speichert direkt in die Dateien.
+// - Online: https://<live-adresse>/keystatic, Anmeldung mit GitHub, jede Speicherung
+//   wird ein Commit im Repository. Cloudflare baut die Seite danach automatisch neu.
+//   Für die einmalige Einrichtung der GitHub-App lokal mit
+//   PUBLIC_KEYSTATIC_STORAGE=github npm run dev starten.
 import { collection, config, fields, singleton } from '@keystatic/core';
 import { block } from '@keystatic/core/content-components';
 
@@ -9,8 +15,12 @@ const timePattern = {
   message: 'Bitte im Format HH:MM eingeben, z. B. 07:30',
 };
 
+const useGitHub = !import.meta.env.DEV || import.meta.env.PUBLIC_KEYSTATIC_STORAGE === 'github';
+
 export default config({
-  storage: { kind: 'local' },
+  storage: useGitHub
+    ? { kind: 'github', repo: { owner: 'TobiSailer', name: 'madmen-testseite' } }
+    : { kind: 'local' },
 
   ui: {
     brand: { name: 'Schreinerei Huber' },
